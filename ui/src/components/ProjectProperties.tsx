@@ -348,7 +348,7 @@ export function ProjectProperties({ project, onUpdate, onFieldUpdate, getFieldSa
       const parsed = new URL(value);
       if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return false;
       const segments = parsed.pathname.split("/").filter(Boolean);
-      return segments.length >= 2;
+      return segments.length >= 1;
     } catch {
       return false;
     }
