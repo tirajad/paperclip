@@ -19,23 +19,23 @@ const surfaceOptions: Array<{
 }> = [
   {
     id: "detail",
-    label: "Run Detail",
-    eyebrow: "Full transcript",
-    description: "The long-form run page with the `Nice | Raw` toggle and the most inspectable transcript view.",
+    label: "รายละเอียดการรัน",
+    eyebrow: "ทรานสคริปต์เต็ม",
+    description: "หน้าการรันแบบเต็มรูปแบบพร้อมปุ่มสลับ `Nice | Raw` และมุมมองทรานสคริปต์ที่ตรวจสอบได้มากที่สุด",
     icon: MonitorCog,
   },
   {
     id: "live",
-    label: "Issue Widget",
-    eyebrow: "Live stream",
-    description: "The issue-detail live run widget, optimized for following an active run without leaving the task page.",
+    label: "วิดเจ็ตงาน",
+    eyebrow: "สตรีมสด",
+    description: "วิดเจ็ตการรันสดในหน้ารายละเอียดงาน ปรับแต่งสำหรับการติดตามการรันที่กำลังทำงานโดยไม่ต้องออกจากหน้างาน",
     icon: RadioTower,
   },
   {
     id: "dashboard",
-    label: "Dashboard Card",
-    eyebrow: "Dense card",
-    description: "The active-agents dashboard card, tuned for compact scanning while keeping the same transcript language.",
+    label: "การ์ดแดชบอร์ด",
+    eyebrow: "การ์ดกระชับ",
+    description: "การ์ดแดชบอร์ดเอเจนต์ที่กำลังทำงาน ปรับแต่งสำหรับการสแกนแบบกระชับโดยยังคงภาษาทรานสคริปต์เดิม",
     icon: PanelsTopLeft,
   },
 ];
@@ -64,7 +64,7 @@ function RunDetailPreview({
       <div className="border-b border-border/60 bg-background/90 px-5 py-4">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="outline" className="uppercase tracking-[0.18em] text-[10px]">
-            Run Detail
+            รายละเอียดการรัน
           </Badge>
           <StatusBadge status={streaming ? "running" : "succeeded"} />
           <span className="text-xs text-muted-foreground">
@@ -72,7 +72,7 @@ function RunDetailPreview({
           </span>
         </div>
         <div className="mt-2 text-sm font-medium">
-          Transcript ({runTranscriptFixtureEntries.length})
+          ทรานสคริปต์ ({runTranscriptFixtureEntries.length})
         </div>
       </div>
       <div className="max-h-[720px] overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(8,145,178,0.08),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(245,158,11,0.10),transparent_28%)] p-5">
@@ -100,10 +100,10 @@ function LiveWidgetPreview({
     <div className="overflow-hidden rounded-xl border border-cyan-500/25 bg-background/85 shadow-[0_20px_50px_rgba(6,182,212,0.10)]">
       <div className="border-b border-border/60 bg-cyan-500/[0.05] px-5 py-4">
         <div className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">
-          Live Runs
+          การรันสด
         </div>
         <div className="mt-1 text-xs text-muted-foreground">
-          Compact live transcript stream for the issue detail page.
+          สตรีมทรานสคริปต์สดแบบกระชับสำหรับหน้ารายละเอียดงาน
         </div>
       </div>
       <div className="px-5 py-4">
@@ -119,7 +119,7 @@ function LiveWidgetPreview({
             </div>
           </div>
           <span className="inline-flex items-center gap-1 rounded-full border border-border/70 bg-background/70 px-2.5 py-1 text-[11px] text-muted-foreground">
-            Open run
+            เปิดการรัน
             <ExternalLink className="h-3 w-3" />
           </span>
         </div>
@@ -165,7 +165,7 @@ function DashboardPreview({
                 <Identity name={runTranscriptFixtureMeta.agentName} size="sm" />
               </div>
               <div className="mt-2 text-[11px] text-muted-foreground">
-                {streaming ? "Live now" : "Finished 2m ago"}
+                {streaming ? "กำลังทำงาน" : "เสร็จเมื่อ 2 นาทีที่แล้ว"}
               </div>
             </div>
             <span className="rounded-full border border-border/70 bg-background/70 px-2 py-1 text-[10px] text-muted-foreground">
@@ -208,9 +208,9 @@ export function RunTranscriptUxLab() {
                 <FlaskConical className="h-3.5 w-3.5" />
                 UX Lab
               </div>
-              <h1 className="mt-4 text-2xl font-semibold tracking-tight">Run Transcript Fixtures</h1>
+              <h1 className="mt-4 text-2xl font-semibold tracking-tight">ฟิกซ์เจอร์ทรานสคริปต์การรัน</h1>
               <p className="mt-2 text-sm text-muted-foreground">
-                Built from a real Paperclip development run, then sanitized so no secrets, local paths, or environment details survive into the fixture.
+                สร้างจากการรันจริงของ Paperclip แล้วทำความสะอาดเพื่อไม่ให้มีข้อมูลลับ พาธภายใน หรือรายละเอียดสภาพแวดล้อมหลงเหลือในฟิกซ์เจอร์
               </p>
             </div>
 
@@ -263,7 +263,7 @@ export function RunTranscriptUxLab() {
 
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="outline" className="rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.18em]">
-                  Source run {runTranscriptFixtureMeta.sourceRunId.slice(0, 8)}
+                  การรันต้นทาง {runTranscriptFixtureMeta.sourceRunId.slice(0, 8)}
                 </Badge>
                 <Badge variant="outline" className="rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.18em]">
                   {runTranscriptFixtureMeta.issueIdentifier}
@@ -273,7 +273,7 @@ export function RunTranscriptUxLab() {
 
             <div className="mb-5 flex flex-wrap items-center gap-2">
               <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                Controls
+                ตัวควบคุม
               </span>
               <div className="inline-flex rounded-full border border-border/70 bg-background/80 p-1">
                 {(["nice", "raw"] as const).map((mode) => (
@@ -311,7 +311,7 @@ export function RunTranscriptUxLab() {
                 className="rounded-full"
                 onClick={() => setStreaming((value) => !value)}
               >
-                {streaming ? "Show settled state" : "Show streaming state"}
+                {streaming ? "แสดงสถานะเสร็จสิ้น" : "แสดงสถานะสตรีมมิ่ง"}
               </Button>
             </div>
 

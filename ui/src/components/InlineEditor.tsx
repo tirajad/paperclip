@@ -24,7 +24,7 @@ export function InlineEditor({
   onSave,
   as: Tag = "span",
   className,
-  placeholder = "Click to edit...",
+  placeholder = "คลิกเพื่อแก้ไข...",
   multiline = false,
   imageUploadHandler,
   mentions,
@@ -192,12 +192,12 @@ export function InlineEditor({
             )}
           >
             {autosaveState === "saving"
-              ? "Autosaving..."
+              ? "กำลังบันทึกอัตโนมัติ..."
               : autosaveState === "saved"
-                ? "Saved"
+                ? "บันทึกแล้ว"
                 : autosaveState === "error"
-                  ? "Could not save"
-                  : "Idle"}
+                  ? "ไม่สามารถบันทึกได้"
+                  : "พร้อม"}
           </span>
         </div>
       </div>

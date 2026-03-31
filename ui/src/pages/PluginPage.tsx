@@ -92,7 +92,7 @@ export function PluginPage() {
   useEffect(() => {
     if (pageSlot) {
       setBreadcrumbs([
-        { label: "Plugins", href: "/instance/settings/plugins" },
+        { label: "ปลั๊กอิน", href: "/instance/settings/plugins" },
         { label: pageSlot.pluginDisplayName },
       ]);
     }
@@ -104,13 +104,13 @@ export function PluginPage() {
     }
     return (
       <div className="space-y-4">
-        <p className="text-sm text-muted-foreground">Select a company to view this page.</p>
+        <p className="text-sm text-muted-foreground">เลือกบริษัทเพื่อดูหน้านี้</p>
       </div>
     );
   }
 
   if (!contributions) {
-    return <div className="text-sm text-muted-foreground">Loading…</div>;
+    return <div className="text-sm text-muted-foreground">กำลังโหลด…</div>;
   }
 
   if (!pluginId && pluginRoutePath) {
@@ -120,7 +120,7 @@ export function PluginPage() {
     if (duplicateMatches.length > 1) {
       return (
         <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-          Multiple plugins declare the route <code>{pluginRoutePath}</code>. Use the plugin-id route until the conflict is resolved.
+          มีปลั๊กอินหลายตัวประกาศเส้นทาง <code>{pluginRoutePath}</code> ใช้เส้นทางแบบ plugin-id จนกว่าจะแก้ไขข้อขัดแย้ง
         </div>
       );
     }
@@ -141,7 +141,7 @@ export function PluginPage() {
         <Button variant="ghost" size="sm" asChild>
           <Link to={companyPrefix ? `/${companyPrefix}/dashboard` : "/dashboard"}>
             <ArrowLeft className="h-4 w-4 mr-1" />
-            Back
+            ย้อนกลับ
           </Link>
         </Button>
       </div>

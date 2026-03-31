@@ -44,51 +44,51 @@ const ADVANCED_ADAPTER_OPTIONS: Array<{
     value: "claude_local",
     label: "Claude Code",
     icon: Sparkles,
-    desc: "Local Claude agent",
+    desc: "เอเจนต์ Claude ในเครื่อง",
     recommended: true,
   },
   {
     value: "codex_local",
     label: "Codex",
     icon: Code,
-    desc: "Local Codex agent",
+    desc: "เอเจนต์ Codex ในเครื่อง",
     recommended: true,
   },
   {
     value: "gemini_local",
     label: "Gemini CLI",
     icon: Gem,
-    desc: "Local Gemini agent",
+    desc: "เอเจนต์ Gemini ในเครื่อง",
   },
   {
     value: "opencode_local",
     label: "OpenCode",
     icon: OpenCodeLogoIcon,
-    desc: "Local multi-provider agent",
+    desc: "เอเจนต์หลายผู้ให้บริการในเครื่อง",
   },
   {
     value: "hermes_local",
     label: "Hermes Agent",
     icon: HermesIcon,
-    desc: "Local multi-provider agent",
+    desc: "เอเจนต์หลายผู้ให้บริการในเครื่อง",
   },
   {
     value: "pi_local",
     label: "Pi",
     icon: Terminal,
-    desc: "Local Pi agent",
+    desc: "เอเจนต์ Pi ในเครื่อง",
   },
   {
     value: "cursor",
     label: "Cursor",
     icon: MousePointer2,
-    desc: "Local Cursor agent",
+    desc: "เอเจนต์ Cursor ในเครื่อง",
   },
   {
     value: "openclaw_gateway",
     label: "OpenClaw Gateway",
     icon: Bot,
-    desc: "Invoke OpenClaw via gateway protocol",
+    desc: "เรียกใช้ OpenClaw ผ่าน gateway protocol",
   },
 ];
 
@@ -110,8 +110,8 @@ export function NewAgentDialog() {
     closeNewAgent();
     openNewIssue({
       assigneeAgentId: ceoAgent?.id,
-      title: "Create a new agent",
-      description: "(type in what kind of agent you want here)",
+      title: "สร้างเอเจนต์ใหม่",
+      description: "(พิมพ์ประเภทเอเจนต์ที่คุณต้องการที่นี่)",
     });
   }
 
@@ -141,7 +141,7 @@ export function NewAgentDialog() {
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-border">
-          <span className="text-sm text-muted-foreground">Add a new agent</span>
+          <span className="text-sm text-muted-foreground">เพิ่มเอเจนต์ใหม่</span>
           <Button
             variant="ghost"
             size="icon-xs"
@@ -164,15 +164,13 @@ export function NewAgentDialog() {
                   <Sparkles className="h-6 w-6 text-foreground" />
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  We recommend letting your CEO handle agent setup — they know the
-                  org structure and can configure reporting, permissions, and
-                  adapters.
+                  เราแนะนำให้ CEO ของคุณจัดการการตั้งค่าเอเจนต์ — เขารู้โครงสร้างองค์กรและสามารถกำหนดค่าการรายงาน สิทธิ์ และอะแดปเตอร์ได้
                 </p>
               </div>
 
               <Button className="w-full" size="lg" onClick={handleAskCeo}>
                 <Bot className="h-4 w-4 mr-2" />
-                Ask the CEO to create a new agent
+                ขอให้ CEO สร้างเอเจนต์ใหม่
               </Button>
 
               {/* Advanced link */}
@@ -181,7 +179,7 @@ export function NewAgentDialog() {
                   className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2 transition-colors"
                   onClick={handleAdvancedConfig}
                 >
-                  I want advanced configuration myself
+                  ฉันต้องการกำหนดค่าขั้นสูงเอง
                 </button>
               </div>
             </>
@@ -193,10 +191,10 @@ export function NewAgentDialog() {
                   onClick={() => setShowAdvancedCards(false)}
                 >
                   <ArrowLeft className="h-3.5 w-3.5" />
-                  Back
+                  ย้อนกลับ
                 </button>
                 <p className="text-sm text-muted-foreground">
-                  Choose your adapter type for advanced setup.
+                  เลือกประเภทอะแดปเตอร์สำหรับการตั้งค่าขั้นสูง
                 </p>
               </div>
 
@@ -211,7 +209,7 @@ export function NewAgentDialog() {
                   >
                     {opt.recommended && (
                       <span className="absolute -top-1.5 right-1.5 bg-green-500 text-white text-[9px] font-semibold px-1.5 py-0.5 rounded-full leading-none">
-                        Recommended
+                        แนะนำ
                       </span>
                     )}
                     <opt.icon className="h-4 w-4" />

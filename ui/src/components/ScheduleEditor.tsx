@@ -7,13 +7,13 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 type SchedulePreset = "every_minute" | "every_hour" | "every_day" | "weekdays" | "weekly" | "monthly" | "custom";
 
 const PRESETS: { value: SchedulePreset; label: string }[] = [
-  { value: "every_minute", label: "Every minute" },
-  { value: "every_hour", label: "Every hour" },
-  { value: "every_day", label: "Every day" },
-  { value: "weekdays", label: "Weekdays" },
-  { value: "weekly", label: "Weekly" },
-  { value: "monthly", label: "Monthly" },
-  { value: "custom", label: "Custom (cron)" },
+  { value: "every_minute", label: "ทุกนาที" },
+  { value: "every_hour", label: "ทุกชั่วโมง" },
+  { value: "every_day", label: "ทุกวัน" },
+  { value: "weekdays", label: "วันทำงาน" },
+  { value: "weekly", label: "รายสัปดาห์" },
+  { value: "monthly", label: "รายเดือน" },
+  { value: "custom", label: "กำหนดเอง (cron)" },
 ];
 
 const HOURS = Array.from({ length: 24 }, (_, i) => ({
@@ -120,21 +120,21 @@ function describeSchedule(cron: string): string {
 
   switch (preset) {
     case "every_minute":
-      return "Every minute";
+      return "ทุกนาที";
     case "every_hour":
-      return `Every hour at :${minute.padStart(2, "0")}`;
+      return `ทุกชั่วโมง นาทีที่ :${minute.padStart(2, "0")}`;
     case "every_day":
-      return `Every day at ${timeStr}`;
+      return `ทุกวัน เวลา ${timeStr}`;
     case "weekdays":
-      return `Weekdays at ${timeStr}`;
+      return `วันทำงาน เวลา ${timeStr}`;
     case "weekly": {
       const day = DAYS_OF_WEEK.find((d) => d.value === dayOfWeek)?.label ?? dayOfWeek;
-      return `Every ${day} at ${timeStr}`;
+      return `ทุก${day} เวลา ${timeStr}`;
     }
     case "monthly":
-      return `Monthly on the ${dayOfMonth}${ordinalSuffix(Number(dayOfMonth))} at ${timeStr}`;
+      return `รายเดือน วันที่ ${dayOfMonth} เวลา ${timeStr}`;
     case "custom":
-      return cron || "No schedule set";
+      return cron || "ยังไม่ได้ตั้งตารางเวลา";
   }
 }
 
@@ -196,7 +196,7 @@ export function ScheduleEditor({
     <div className="space-y-3">
       <Select value={preset} onValueChange={(v) => handlePresetChange(v as SchedulePreset)}>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="Choose frequency..." />
+          <SelectValue placeholder="เลือกความถี่..." />
         </SelectTrigger>
         <SelectContent>
           {PRESETS.map((p) => (
@@ -219,14 +219,14 @@ export function ScheduleEditor({
             className="font-mono text-sm"
           />
           <p className="text-xs text-muted-foreground">
-            Five fields: minute hour day-of-month month day-of-week
+            ห้าฟิลด์: นาที ชั่วโมง วันของเดือน เดือน วันของสัปดาห์
           </p>
         </div>
       ) : (
         <div className="flex flex-wrap items-center gap-2">
           {preset !== "every_minute" && preset !== "every_hour" && (
             <>
-              <span className="text-sm text-muted-foreground">at</span>
+              <span className="text-sm text-muted-foreground">เวลา</span>
               <Select
                 value={hour}
                 onValueChange={(h) => {
@@ -269,7 +269,7 @@ export function ScheduleEditor({
 
           {preset === "every_hour" && (
             <>
-              <span className="text-sm text-muted-foreground">at minute</span>
+              <span className="text-sm text-muted-foreground">นาทีที่</span>
               <Select
                 value={minute}
                 onValueChange={(m) => {
@@ -293,7 +293,7 @@ export function ScheduleEditor({
 
           {preset === "weekly" && (
             <>
-              <span className="text-sm text-muted-foreground">on</span>
+              <span className="text-sm text-muted-foreground">วัน</span>
               <div className="flex gap-1">
                 {DAYS_OF_WEEK.map((d) => (
                   <Button
@@ -316,7 +316,7 @@ export function ScheduleEditor({
 
           {preset === "monthly" && (
             <>
-              <span className="text-sm text-muted-foreground">on day</span>
+              <span className="text-sm text-muted-foreground">วันที่</span>
               <Select
                 value={dayOfMonth}
                 onValueChange={(dom) => {

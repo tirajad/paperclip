@@ -41,20 +41,20 @@ export function BoardClaimPage() {
   });
 
   if (!token || !code) {
-    return <div className="mx-auto max-w-xl py-10 text-sm text-destructive">Invalid board claim URL.</div>;
+    return <div className="mx-auto max-w-xl py-10 text-sm text-destructive">URL อ้างสิทธิ์บอร์ดไม่ถูกต้อง</div>;
   }
 
   if (statusQuery.isLoading || sessionQuery.isLoading) {
-    return <div className="mx-auto max-w-xl py-10 text-sm text-muted-foreground">Loading claim challenge...</div>;
+    return <div className="mx-auto max-w-xl py-10 text-sm text-muted-foreground">กำลังโหลดการอ้างสิทธิ์...</div>;
   }
 
   if (statusQuery.error) {
     return (
       <div className="mx-auto max-w-xl py-10">
         <div className="rounded-lg border border-border bg-card p-6">
-          <h1 className="text-lg font-semibold">Claim challenge unavailable</h1>
+          <h1 className="text-lg font-semibold">การอ้างสิทธิ์ไม่พร้อมใช้งาน</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            {statusQuery.error instanceof Error ? statusQuery.error.message : "Challenge is invalid or expired."}
+            {statusQuery.error instanceof Error ? statusQuery.error.message : "คำขอไม่ถูกต้องหรือหมดอายุแล้ว"}
           </p>
         </div>
       </div>
@@ -63,19 +63,19 @@ export function BoardClaimPage() {
 
   const status = statusQuery.data;
   if (!status) {
-    return <div className="mx-auto max-w-xl py-10 text-sm text-destructive">Claim challenge unavailable.</div>;
+    return <div className="mx-auto max-w-xl py-10 text-sm text-destructive">การอ้างสิทธิ์ไม่พร้อมใช้งาน</div>;
   }
 
   if (status.status === "claimed") {
     return (
       <div className="mx-auto max-w-xl py-10">
         <div className="rounded-lg border border-border bg-card p-6">
-          <h1 className="text-lg font-semibold">Board ownership claimed</h1>
+          <h1 className="text-lg font-semibold">อ้างสิทธิ์ความเป็นเจ้าของบอร์ดแล้ว</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            This instance is now linked to your authenticated user.
+            อินสแตนซ์นี้เชื่อมต่อกับผู้ใช้ที่ยืนยันตัวตนของคุณแล้ว
           </p>
           <Button asChild className="mt-4">
-            <Link to="/">Open board</Link>
+            <Link to="/">เปิดบอร์ด</Link>
           </Button>
         </div>
       </div>
@@ -86,12 +86,12 @@ export function BoardClaimPage() {
     return (
       <div className="mx-auto max-w-xl py-10">
         <div className="rounded-lg border border-border bg-card p-6">
-          <h1 className="text-lg font-semibold">Sign in required</h1>
+          <h1 className="text-lg font-semibold">ต้องเข้าสู่ระบบ</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Sign in or create an account, then return to this page to claim Board ownership.
+            เข้าสู่ระบบหรือสร้างบัญชี จากนั้นกลับมาที่หน้านี้เพื่ออ้างสิทธิ์ความเป็นเจ้าของบอร์ด
           </p>
           <Button asChild className="mt-4">
-            <Link to={`/auth?next=${encodeURIComponent(currentPath)}`}>Sign in / Create account</Link>
+            <Link to={`/auth?next=${encodeURIComponent(currentPath)}`}>เข้าสู่ระบบ / สร้างบัญชี</Link>
           </Button>
         </div>
       </div>
@@ -101,14 +101,14 @@ export function BoardClaimPage() {
   return (
     <div className="mx-auto max-w-xl py-10">
       <div className="rounded-lg border border-border bg-card p-6">
-        <h1 className="text-xl font-semibold">Claim Board ownership</h1>
+        <h1 className="text-xl font-semibold">อ้างสิทธิ์ความเป็นเจ้าของบอร์ด</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          This will promote your user to instance admin and migrate company ownership access from local trusted mode.
+          การดำเนินการนี้จะเลื่อนระดับผู้ใช้ของคุณเป็นผู้ดูแลอินสแตนซ์ และย้ายสิทธิ์ความเป็นเจ้าของบริษัทจากโหมดเชื่อถือในเครื่อง
         </p>
 
         {claimMutation.error && (
           <p className="mt-3 text-sm text-destructive">
-            {claimMutation.error instanceof Error ? claimMutation.error.message : "Failed to claim board ownership"}
+            {claimMutation.error instanceof Error ? claimMutation.error.message : "ไม่สามารถอ้างสิทธิ์ความเป็นเจ้าของบอร์ดได้"}
           </p>
         )}
 
@@ -117,7 +117,7 @@ export function BoardClaimPage() {
           onClick={() => claimMutation.mutate()}
           disabled={claimMutation.isPending}
         >
-          {claimMutation.isPending ? "Claiming…" : "Claim ownership"}
+          {claimMutation.isPending ? "กำลังอ้างสิทธิ์…" : "อ้างสิทธิ์ความเป็นเจ้าของ"}
         </Button>
       </div>
     </div>

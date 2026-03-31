@@ -33,8 +33,8 @@ export function InstanceSettings() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Instance Settings" },
-      { label: "Heartbeats" },
+      { label: "ตั้งค่าอินสแตนซ์" },
+      { label: "ฮาร์ทบีท" },
     ]);
   }, [setBreadcrumbs]);
 
@@ -73,7 +73,7 @@ export function InstanceSettings() {
       ]);
     },
     onError: (error) => {
-      setActionError(error instanceof Error ? error.message : "Failed to update heartbeat.");
+      setActionError(error instanceof Error ? error.message : "ไม่สามารถอัปเดตฮาร์ทบีทได้");
     },
   });
 
@@ -106,8 +106,8 @@ export function InstanceSettings() {
         const detail = firstError instanceof Error ? firstError.message : "Unknown error";
         throw new Error(
           failures.length === 1
-            ? `Failed to disable 1 timer heartbeat: ${detail}`
-            : `Failed to disable ${failures.length} of ${enabled.length} timer heartbeats. First error: ${detail}`,
+            ? `ไม่สามารถปิดใช้งานฮาร์ทบีทแบบตั้งเวลา 1 รายการ: ${detail}`
+            : `ไม่สามารถปิดใช้งานฮาร์ทบีทแบบตั้งเวลา ${failures.length} จาก ${enabled.length} รายการ ข้อผิดพลาดแรก: ${detail}`,
         );
       }
       return enabled;
@@ -126,7 +126,7 @@ export function InstanceSettings() {
       ]);
     },
     onError: (error) => {
-      setActionError(error instanceof Error ? error.message : "Failed to disable all heartbeats.");
+      setActionError(error instanceof Error ? error.message : "ไม่สามารถปิดใช้งานฮาร์ทบีททั้งหมดได้");
     },
   });
 
@@ -150,7 +150,7 @@ export function InstanceSettings() {
   }, [agents]);
 
   if (heartbeatsQuery.isLoading) {
-    return <div className="text-sm text-muted-foreground">Loading scheduler heartbeats...</div>;
+    return <div className="text-sm text-muted-foreground">กำลังโหลดฮาร์ทบีทตัวจัดตาราง...</div>;
   }
 
   if (heartbeatsQuery.error) {
@@ -158,7 +158,7 @@ export function InstanceSettings() {
       <div className="text-sm text-destructive">
         {heartbeatsQuery.error instanceof Error
           ? heartbeatsQuery.error.message
-          : "Failed to load scheduler heartbeats."}
+          : "ไม่สามารถโหลดฮาร์ทบีทตัวจัดตารางได้"}
       </div>
     );
   }
@@ -168,17 +168,17 @@ export function InstanceSettings() {
       <div className="space-y-2">
         <div className="flex items-center gap-2">
           <Settings className="h-5 w-5 text-muted-foreground" />
-          <h1 className="text-lg font-semibold">Scheduler Heartbeats</h1>
+          <h1 className="text-lg font-semibold">ฮาร์ทบีทตัวจัดตาราง</h1>
         </div>
         <p className="text-sm text-muted-foreground">
-          Agents with a timer heartbeat enabled across all of your companies.
+          เอเจนต์ที่เปิดใช้งานฮาร์ทบีทแบบตั้งเวลาในทุกบริษัทของคุณ
         </p>
       </div>
 
       <div className="flex items-center gap-4 text-sm text-muted-foreground">
-        <span><span className="font-semibold text-foreground">{activeCount}</span> active</span>
-        <span><span className="font-semibold text-foreground">{disabledCount}</span> disabled</span>
-        <span><span className="font-semibold text-foreground">{grouped.length}</span> {grouped.length === 1 ? "company" : "companies"}</span>
+        <span><span className="font-semibold text-foreground">{activeCount}</span> ใช้งาน</span>
+        <span><span className="font-semibold text-foreground">{disabledCount}</span> ปิดใช้งาน</span>
+        <span><span className="font-semibold text-foreground">{grouped.length}</span> {grouped.length === 1 ? "บริษัท" : "บริษัท"}</span>
         {anyEnabled && (
           <Button
             variant="destructive"
@@ -186,14 +186,14 @@ export function InstanceSettings() {
             className="ml-auto h-7 text-xs"
             disabled={disableAllMutation.isPending}
             onClick={() => {
-              const noun = enabledCount === 1 ? "agent" : "agents";
-              if (!window.confirm(`Disable timer heartbeats for all ${enabledCount} enabled ${noun}?`)) {
+              const noun = enabledCount === 1 ? "เอเจนต์" : "เอเจนต์";
+              if (!window.confirm(`ปิดใช้งานฮาร์ทบีทแบบตั้งเวลาสำหรับ ${enabledCount} ${noun}ที่เปิดใช้งานทั้งหมดหรือไม่?`)) {
                 return;
               }
               disableAllMutation.mutate(agents);
             }}
           >
-            {disableAllMutation.isPending ? "Disabling..." : "Disable All"}
+            {disableAllMutation.isPending ? "กำลังปิดใช้งาน..." : "ปิดใช้งานทั้งหมด"}
           </Button>
         )}
       </div>
@@ -207,7 +207,7 @@ export function InstanceSettings() {
       {agents.length === 0 ? (
         <EmptyState
           icon={Clock3}
-          message="No scheduler heartbeats match the current criteria."
+          message="ไม่มีฮาร์ทบีทตัวจัดตารางที่ตรงกับเกณฑ์ปัจจุบัน"
         />
       ) : (
         <div className="space-y-4">
@@ -229,7 +229,7 @@ export function InstanceSettings() {
                           variant={agent.schedulerActive ? "default" : "outline"}
                           className="shrink-0 text-[10px] px-1.5 py-0"
                         >
-                          {agent.schedulerActive ? "On" : "Off"}
+                          {agent.schedulerActive ? "เปิด" : "ปิด"}
                         </Badge>
                         <Link
                           to={buildAgentHref(agent)}
@@ -249,13 +249,13 @@ export function InstanceSettings() {
                         >
                           {agent.lastHeartbeatAt
                             ? relativeTime(agent.lastHeartbeatAt)
-                            : "never"}
+                            : "ไม่เคย"}
                         </span>
                         <span className="ml-auto flex items-center gap-1.5 shrink-0">
                           <Link
                             to={buildAgentHref(agent)}
                             className="text-muted-foreground hover:text-foreground"
-                            title="Full agent config"
+                            title="การตั้งค่าเอเจนต์แบบเต็ม"
                           >
                             <ExternalLink className="h-3.5 w-3.5" />
                           </Link>
@@ -266,7 +266,7 @@ export function InstanceSettings() {
                             disabled={saving}
                             onClick={() => toggleMutation.mutate(agent)}
                           >
-                            {saving ? "..." : agent.heartbeatEnabled ? "Disable Timer Heartbeat" : "Enable Timer Heartbeat"}
+                            {saving ? "..." : agent.heartbeatEnabled ? "ปิดใช้งานฮาร์ทบีทแบบตั้งเวลา" : "เปิดใช้งานฮาร์ทบีทแบบตั้งเวลา"}
                           </Button>
                         </span>
                       </div>

@@ -20,28 +20,28 @@ const platforms: { id: Platform; label: string; icon: typeof Apple }[] = [
 const instructions: Record<Platform, { steps: string[]; tip?: string }> = {
   mac: {
     steps: [
-      "Open Finder and navigate to the folder.",
-      "Right-click (or Control-click) the folder.",
-      "Hold the Option (⌥) key — \"Copy\" changes to \"Copy as Pathname\".",
-      "Click \"Copy as Pathname\", then paste here.",
+      "เปิด Finder และไปที่โฟลเดอร์",
+      "คลิกขวา (หรือ Control-คลิก) ที่โฟลเดอร์",
+      "กดค้างปุ่ม Option (⌥) — \"คัดลอก\" จะเปลี่ยนเป็น \"คัดลอกเป็นเส้นทาง\"",
+      "คลิก \"คัดลอกเป็นเส้นทาง\" แล้ววางที่นี่",
     ],
-    tip: "You can also open Terminal, type cd, drag the folder into the terminal window, and press Enter. Then type pwd to see the full path.",
+    tip: "คุณยังสามารถเปิด Terminal พิมพ์ cd ลากโฟลเดอร์เข้าหน้าต่าง Terminal แล้วกด Enter จากนั้นพิมพ์ pwd เพื่อดูเส้นทางเต็ม",
   },
   windows: {
     steps: [
-      "Open File Explorer and navigate to the folder.",
-      "Click in the address bar at the top — the full path will appear.",
-      "Copy the path, then paste here.",
+      "เปิด File Explorer และไปที่โฟลเดอร์",
+      "คลิกที่แถบที่อยู่ด้านบน — เส้นทางเต็มจะปรากฏ",
+      "คัดลอกเส้นทาง แล้ววางที่นี่",
     ],
-    tip: "Alternatively, hold Shift and right-click the folder, then select \"Copy as path\".",
+    tip: "อีกทางหนึ่ง กด Shift ค้างแล้วคลิกขวาที่โฟลเดอร์ จากนั้นเลือก \"คัดลอกเป็นเส้นทาง\"",
   },
   linux: {
     steps: [
-      "Open a terminal and navigate to the directory with cd.",
-      "Run pwd to print the full path.",
-      "Copy the output and paste here.",
+      "เปิดเทอร์มินัลและไปที่ไดเรกทอรีด้วย cd",
+      "รัน pwd เพื่อแสดงเส้นทางเต็ม",
+      "คัดลอกผลลัพธ์แล้ววางที่นี่",
     ],
-    tip: "In most file managers, Ctrl+L reveals the full path in the address bar.",
+    tip: "ในตัวจัดการไฟล์ส่วนใหญ่ Ctrl+L จะแสดงเส้นทางเต็มในแถบที่อยู่",
   },
 };
 
@@ -69,11 +69,11 @@ export function PathInstructionsModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-base">How to get a full path</DialogTitle>
+          <DialogTitle className="text-base">วิธีรับเส้นทางเต็ม</DialogTitle>
           <DialogDescription>
-            Paste the absolute path (e.g.{" "}
+            วางเส้นทางสัมบูรณ์ (เช่น{" "}
             <code className="text-xs bg-muted px-1 py-0.5 rounded">/Users/you/project</code>
-            ) into the input field.
+            ) ลงในช่องป้อนข้อมูล
           </DialogDescription>
         </DialogHeader>
 
@@ -135,7 +135,7 @@ export function ChoosePathButton({ className }: { className?: string }) {
         )}
         onClick={() => setOpen(true)}
       >
-        Choose
+        เลือก
       </button>
       <PathInstructionsModal open={open} onOpenChange={setOpen} />
     </>

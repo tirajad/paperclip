@@ -19,7 +19,7 @@ function parseDollarInput(value: string) {
 }
 
 function windowLabel(windowKind: BudgetPolicySummary["windowKind"]) {
-  return windowKind === "lifetime" ? "Lifetime budget" : "Monthly UTC budget";
+  return windowKind === "lifetime" ? "งบประมาณตลอดอายุการใช้งาน" : "งบประมาณรายเดือน UTC";
 }
 
 function statusTone(status: BudgetPolicySummary["status"]) {
@@ -56,38 +56,38 @@ export function BudgetPolicyCard({
   const observedBudgetGrid = isPlain ? (
     <div className="grid gap-6 sm:grid-cols-2">
       <div>
-        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Observed</div>
+        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">ใช้จริง</div>
         <div className="mt-2 text-xl font-semibold tabular-nums">{formatCents(summary.observedAmount)}</div>
         <div className="mt-1 text-xs text-muted-foreground">
-          {summary.amount > 0 ? `${summary.utilizationPercent}% of limit` : "No cap configured"}
+          {summary.amount > 0 ? `${summary.utilizationPercent}% ของวงเงิน` : "ไม่ได้กำหนดเพดาน"}
         </div>
       </div>
       <div>
-        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Budget</div>
+        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">งบประมาณ</div>
         <div className="mt-2 text-xl font-semibold tabular-nums">
-          {summary.amount > 0 ? formatCents(summary.amount) : "Disabled"}
+          {summary.amount > 0 ? formatCents(summary.amount) : "ปิดใช้งาน"}
         </div>
         <div className="mt-1 text-xs text-muted-foreground">
-          Soft alert at {summary.warnPercent}%{summary.paused && summary.pauseReason ? ` · ${summary.pauseReason} pause` : ""}
+          แจ้งเตือนเบื้องต้นที่ {summary.warnPercent}%{summary.paused && summary.pauseReason ? ` · ${summary.pauseReason} หยุดชั่วคราว` : ""}
         </div>
       </div>
     </div>
   ) : (
     <div className="grid gap-3 sm:grid-cols-2">
       <div className="rounded-xl border border-border/70 bg-black/[0.18] px-4 py-3">
-        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Observed</div>
+        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">ใช้จริง</div>
         <div className="mt-2 text-xl font-semibold tabular-nums">{formatCents(summary.observedAmount)}</div>
         <div className="mt-1 text-xs text-muted-foreground">
-          {summary.amount > 0 ? `${summary.utilizationPercent}% of limit` : "No cap configured"}
+          {summary.amount > 0 ? `${summary.utilizationPercent}% ของวงเงิน` : "ไม่ได้กำหนดเพดาน"}
         </div>
       </div>
       <div className="rounded-xl border border-border/70 bg-black/[0.18] px-4 py-3">
-        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Budget</div>
+        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">งบประมาณ</div>
         <div className="mt-2 text-xl font-semibold tabular-nums">
-          {summary.amount > 0 ? formatCents(summary.amount) : "Disabled"}
+          {summary.amount > 0 ? formatCents(summary.amount) : "ปิดใช้งาน"}
         </div>
         <div className="mt-1 text-xs text-muted-foreground">
-          Soft alert at {summary.warnPercent}%{summary.paused && summary.pauseReason ? ` · ${summary.pauseReason} pause` : ""}
+          แจ้งเตือนเบื้องต้นที่ {summary.warnPercent}%{summary.paused && summary.pauseReason ? ` · ${summary.pauseReason} หยุดชั่วคราว` : ""}
         </div>
       </div>
     </div>
@@ -96,8 +96,8 @@ export function BudgetPolicyCard({
   const progressSection = (
     <div className="space-y-2">
       <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>Remaining</span>
-        <span>{summary.amount > 0 ? formatCents(summary.remainingAmount) : "Unlimited"}</span>
+        <span>คงเหลือ</span>
+        <span>{summary.amount > 0 ? formatCents(summary.remainingAmount) : "ไม่จำกัด"}</span>
       </div>
       <div className={cn("h-2 overflow-hidden rounded-full", isPlain ? "bg-border/70" : "bg-muted/70")}>
         <div
@@ -120,8 +120,8 @@ export function BudgetPolicyCard({
       <PauseCircle className="mt-0.5 h-4 w-4 shrink-0" />
       <div>
         {summary.scopeType === "project"
-          ? "Execution is paused for this project until the budget is raised or the incident is dismissed."
-          : "Heartbeats are paused for this scope until the budget is raised or the incident is dismissed."}
+          ? "การดำเนินการถูกหยุดชั่วคราวสำหรับโปรเจกต์นี้จนกว่าจะเพิ่มงบประมาณหรือยกเลิกเหตุการณ์"
+          : "Heartbeat ถูกหยุดชั่วคราวสำหรับขอบเขตนี้จนกว่าจะเพิ่มงบประมาณหรือยกเลิกเหตุการณ์"}
       </div>
     </div>
   ) : null;
@@ -130,7 +130,7 @@ export function BudgetPolicyCard({
     <div className={cn("flex flex-col gap-3 sm:flex-row sm:items-end", isPlain ? "" : "rounded-xl border border-border/70 bg-background/50 p-3")}>
       <div className="min-w-0 flex-1">
         <label className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-          Budget (USD)
+          งบประมาณ (USD)
         </label>
         <Input
           value={draftBudget}
@@ -146,7 +146,7 @@ export function BudgetPolicyCard({
         }}
         disabled={!canSave || isSaving || parsedDraft === null}
       >
-        {isSaving ? "Saving..." : summary.amount > 0 ? "Update budget" : "Set budget"}
+        {isSaving ? "กำลังบันทึก..." : summary.amount > 0 ? "อัปเดตงบประมาณ" : "ตั้งงบประมาณ"}
       </Button>
     </div>
   ) : null;
@@ -173,7 +173,7 @@ export function BudgetPolicyCard({
             )}
           >
             <StatusIcon className="h-3.5 w-3.5" />
-            {summary.paused ? "Paused" : summary.status === "warning" ? "Warning" : summary.status === "hard_stop" ? "Hard stop" : "Healthy"}
+            {summary.paused ? "หยุดชั่วคราว" : summary.status === "warning" ? "คำเตือน" : summary.status === "hard_stop" ? "หยุดฉุกเฉิน" : "ปกติ"}
           </div>
         </div>
 
@@ -182,7 +182,7 @@ export function BudgetPolicyCard({
         {pausedPane}
         {saveSection}
         {parsedDraft === null ? (
-          <p className="text-xs text-destructive">Enter a valid non-negative dollar amount.</p>
+          <p className="text-xs text-destructive">กรุณาระบุจำนวนเงินดอลลาร์ที่ถูกต้อง (ไม่ติดลบ)</p>
         ) : null}
       </div>
     );
@@ -201,7 +201,7 @@ export function BudgetPolicyCard({
           </div>
           <div className={cn("inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.18em]", statusTone(summary.status))}>
             <StatusIcon className="h-3.5 w-3.5" />
-            {summary.paused ? "Paused" : summary.status === "warning" ? "Warning" : summary.status === "hard_stop" ? "Hard stop" : "Healthy"}
+            {summary.paused ? "หยุดชั่วคราว" : summary.status === "warning" ? "คำเตือน" : summary.status === "hard_stop" ? "หยุดฉุกเฉิน" : "ปกติ"}
           </div>
         </div>
       </CardHeader>
@@ -211,7 +211,7 @@ export function BudgetPolicyCard({
         {pausedPane}
         {saveSection}
         {parsedDraft === null ? (
-          <p className="text-xs text-destructive">Enter a valid non-negative dollar amount.</p>
+          <p className="text-xs text-destructive">กรุณาระบุจำนวนเงินดอลลาร์ที่ถูกต้อง (ไม่ติดลบ)</p>
         ) : null}
       </CardContent>
     </Card>

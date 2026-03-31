@@ -5,43 +5,43 @@ import { cn } from "../lib/utils";
 import { deriveProjectUrlKey, type ActivityEvent, type Agent } from "@paperclipai/shared";
 
 const ACTION_VERBS: Record<string, string> = {
-  "issue.created": "created",
-  "issue.updated": "updated",
-  "issue.checked_out": "checked out",
-  "issue.released": "released",
-  "issue.comment_added": "commented on",
-  "issue.attachment_added": "attached file to",
-  "issue.attachment_removed": "removed attachment from",
-  "issue.document_created": "created document for",
-  "issue.document_updated": "updated document on",
-  "issue.document_deleted": "deleted document from",
-  "issue.commented": "commented on",
-  "issue.deleted": "deleted",
-  "agent.created": "created",
-  "agent.updated": "updated",
-  "agent.paused": "paused",
-  "agent.resumed": "resumed",
-  "agent.terminated": "terminated",
-  "agent.key_created": "created API key for",
-  "agent.budget_updated": "updated budget for",
-  "agent.runtime_session_reset": "reset session for",
-  "heartbeat.invoked": "invoked heartbeat for",
-  "heartbeat.cancelled": "cancelled heartbeat for",
-  "approval.created": "requested approval",
-  "approval.approved": "approved",
-  "approval.rejected": "rejected",
-  "project.created": "created",
-  "project.updated": "updated",
-  "project.deleted": "deleted",
-  "goal.created": "created",
-  "goal.updated": "updated",
-  "goal.deleted": "deleted",
-  "cost.reported": "reported cost for",
-  "cost.recorded": "recorded cost for",
-  "company.created": "created company",
-  "company.updated": "updated company",
-  "company.archived": "archived",
-  "company.budget_updated": "updated budget for",
+  "issue.created": "สร้าง",
+  "issue.updated": "อัปเดต",
+  "issue.checked_out": "เช็คเอาต์",
+  "issue.released": "ปล่อย",
+  "issue.comment_added": "แสดงความคิดเห็นบน",
+  "issue.attachment_added": "แนบไฟล์ไปที่",
+  "issue.attachment_removed": "ลบไฟล์แนบออกจาก",
+  "issue.document_created": "สร้างเอกสารสำหรับ",
+  "issue.document_updated": "อัปเดตเอกสารบน",
+  "issue.document_deleted": "ลบเอกสารจาก",
+  "issue.commented": "แสดงความคิดเห็นบน",
+  "issue.deleted": "ลบ",
+  "agent.created": "สร้าง",
+  "agent.updated": "อัปเดต",
+  "agent.paused": "หยุดชั่วคราว",
+  "agent.resumed": "ดำเนินการต่อ",
+  "agent.terminated": "ยุติ",
+  "agent.key_created": "สร้างคีย์ API สำหรับ",
+  "agent.budget_updated": "อัปเดตงบประมาณสำหรับ",
+  "agent.runtime_session_reset": "รีเซ็ตเซสชันสำหรับ",
+  "heartbeat.invoked": "เรียกใช้ heartbeat สำหรับ",
+  "heartbeat.cancelled": "ยกเลิก heartbeat สำหรับ",
+  "approval.created": "ร้องขอการอนุมัติ",
+  "approval.approved": "อนุมัติ",
+  "approval.rejected": "ปฏิเสธ",
+  "project.created": "สร้าง",
+  "project.updated": "อัปเดต",
+  "project.deleted": "ลบ",
+  "goal.created": "สร้าง",
+  "goal.updated": "อัปเดต",
+  "goal.deleted": "ลบ",
+  "cost.reported": "รายงานค่าใช้จ่ายสำหรับ",
+  "cost.recorded": "บันทึกค่าใช้จ่ายสำหรับ",
+  "company.created": "สร้างบริษัท",
+  "company.updated": "อัปเดตบริษัท",
+  "company.archived": "เก็บถาวร",
+  "company.budget_updated": "อัปเดตงบประมาณสำหรับ",
 };
 
 function humanizeValue(value: unknown): string {
@@ -55,14 +55,14 @@ function formatVerb(action: string, details?: Record<string, unknown> | null): s
     if (details.status !== undefined) {
       const from = previous.status;
       return from
-        ? `changed status from ${humanizeValue(from)} to ${humanizeValue(details.status)} on`
-        : `changed status to ${humanizeValue(details.status)} on`;
+        ? `เปลี่ยนสถานะจาก ${humanizeValue(from)} เป็น ${humanizeValue(details.status)} บน`
+        : `เปลี่ยนสถานะเป็น ${humanizeValue(details.status)} บน`;
     }
     if (details.priority !== undefined) {
       const from = previous.priority;
       return from
-        ? `changed priority from ${humanizeValue(from)} to ${humanizeValue(details.priority)} on`
-        : `changed priority to ${humanizeValue(details.priority)} on`;
+        ? `เปลี่ยนความสำคัญจาก ${humanizeValue(from)} เป็น ${humanizeValue(details.priority)} บน`
+        : `เปลี่ยนความสำคัญเป็น ${humanizeValue(details.priority)} บน`;
     }
   }
   return ACTION_VERBS[action] ?? action.replace(/[._]/g, " ");
@@ -106,7 +106,7 @@ export function ActivityRow({ event, agentMap, entityNameMap, entityTitleMap, cl
     : entityLink(event.entityType, event.entityId, name);
 
   const actor = event.actorType === "agent" ? agentMap.get(event.actorId) : null;
-  const actorName = actor?.name ?? (event.actorType === "system" ? "System" : event.actorType === "user" ? "Board" : event.actorId || "Unknown");
+  const actorName = actor?.name ?? (event.actorType === "system" ? "ระบบ" : event.actorType === "user" ? "บอร์ด" : event.actorId || "ไม่ทราบ");
 
   const inner = (
     <div className="flex gap-3">

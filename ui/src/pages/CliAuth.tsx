@@ -45,20 +45,20 @@ export function CliAuthPage() {
   });
 
   if (!challengeId || !token) {
-    return <div className="mx-auto max-w-xl py-10 text-sm text-destructive">Invalid CLI auth URL.</div>;
+    return <div className="mx-auto max-w-xl py-10 text-sm text-destructive">URL การยืนยันตัวตน CLI ไม่ถูกต้อง</div>;
   }
 
   if (sessionQuery.isLoading || challengeQuery.isLoading) {
-    return <div className="mx-auto max-w-xl py-10 text-sm text-muted-foreground">Loading CLI auth challenge...</div>;
+    return <div className="mx-auto max-w-xl py-10 text-sm text-muted-foreground">กำลังโหลดการยืนยันตัวตน CLI...</div>;
   }
 
   if (challengeQuery.error) {
     return (
       <div className="mx-auto max-w-xl py-10">
         <div className="rounded-lg border border-border bg-card p-6">
-          <h1 className="text-lg font-semibold">CLI auth challenge unavailable</h1>
+          <h1 className="text-lg font-semibold">การยืนยันตัวตน CLI ไม่พร้อมใช้งาน</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            {challengeQuery.error instanceof Error ? challengeQuery.error.message : "Challenge is invalid or expired."}
+            {challengeQuery.error instanceof Error ? challengeQuery.error.message : "คำขอไม่ถูกต้องหรือหมดอายุแล้ว"}
           </p>
         </div>
       </div>
@@ -67,19 +67,19 @@ export function CliAuthPage() {
 
   const challenge = challengeQuery.data;
   if (!challenge) {
-    return <div className="mx-auto max-w-xl py-10 text-sm text-destructive">CLI auth challenge unavailable.</div>;
+    return <div className="mx-auto max-w-xl py-10 text-sm text-destructive">การยืนยันตัวตน CLI ไม่พร้อมใช้งาน</div>;
   }
 
   if (challenge.status === "approved") {
     return (
       <div className="mx-auto max-w-xl py-10">
         <div className="rounded-lg border border-border bg-card p-6">
-          <h1 className="text-xl font-semibold">CLI access approved</h1>
+          <h1 className="text-xl font-semibold">อนุมัติการเข้าถึง CLI แล้ว</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            The Paperclip CLI can now finish authentication on the requesting machine.
+            Paperclip CLI สามารถดำเนินการยืนยันตัวตนบนเครื่องที่ร้องขอได้แล้ว
           </p>
           <p className="mt-4 text-sm text-muted-foreground">
-            Command: <span className="font-mono text-foreground">{challenge.command}</span>
+            คำสั่ง: <span className="font-mono text-foreground">{challenge.command}</span>
           </p>
         </div>
       </div>
@@ -91,10 +91,10 @@ export function CliAuthPage() {
       <div className="mx-auto max-w-xl py-10">
         <div className="rounded-lg border border-border bg-card p-6">
           <h1 className="text-xl font-semibold">
-            {challenge.status === "expired" ? "CLI auth challenge expired" : "CLI auth challenge cancelled"}
+            {challenge.status === "expired" ? "การยืนยันตัวตน CLI หมดอายุแล้ว" : "การยืนยันตัวตน CLI ถูกยกเลิกแล้ว"}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Start the CLI auth flow again from your terminal to generate a new approval request.
+            เริ่มกระบวนการยืนยันตัวตน CLI ใหม่จากเทอร์มินัลของคุณเพื่อสร้างคำขออนุมัติใหม่
           </p>
         </div>
       </div>
@@ -105,12 +105,12 @@ export function CliAuthPage() {
     return (
       <div className="mx-auto max-w-xl py-10">
         <div className="rounded-lg border border-border bg-card p-6">
-          <h1 className="text-xl font-semibold">Sign in required</h1>
+          <h1 className="text-xl font-semibold">ต้องเข้าสู่ระบบ</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Sign in or create an account, then return to this page to approve the CLI access request.
+            เข้าสู่ระบบหรือสร้างบัญชี จากนั้นกลับมาที่หน้านี้เพื่ออนุมัติคำขอเข้าถึง CLI
           </p>
           <Button asChild className="mt-4">
-            <Link to={`/auth?next=${encodeURIComponent(currentPath)}`}>Sign in / Create account</Link>
+            <Link to={`/auth?next=${encodeURIComponent(currentPath)}`}>เข้าสู่ระบบ / สร้างบัญชี</Link>
           </Button>
         </div>
       </div>
@@ -120,29 +120,29 @@ export function CliAuthPage() {
   return (
     <div className="mx-auto max-w-xl py-10">
       <div className="rounded-lg border border-border bg-card p-6">
-        <h1 className="text-xl font-semibold">Approve Paperclip CLI access</h1>
+        <h1 className="text-xl font-semibold">อนุมัติการเข้าถึง Paperclip CLI</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          A local Paperclip CLI process is requesting board access to this instance.
+          กระบวนการ Paperclip CLI ในเครื่องกำลังร้องขอการเข้าถึงบอร์ดไปยังอินสแตนซ์นี้
         </p>
 
         <div className="mt-5 space-y-3 text-sm">
           <div>
-            <div className="text-muted-foreground">Command</div>
+            <div className="text-muted-foreground">คำสั่ง</div>
             <div className="font-mono text-foreground">{challenge.command}</div>
           </div>
           <div>
-            <div className="text-muted-foreground">Client</div>
+            <div className="text-muted-foreground">ไคลเอนต์</div>
             <div className="text-foreground">{challenge.clientName ?? "paperclipai cli"}</div>
           </div>
           <div>
-            <div className="text-muted-foreground">Requested access</div>
+            <div className="text-muted-foreground">สิทธิ์การเข้าถึงที่ร้องขอ</div>
             <div className="text-foreground">
-              {challenge.requestedAccess === "instance_admin_required" ? "Instance admin" : "Board"}
+              {challenge.requestedAccess === "instance_admin_required" ? "ผู้ดูแลอินสแตนซ์" : "บอร์ด"}
             </div>
           </div>
           {challenge.requestedCompanyName && (
             <div>
-              <div className="text-muted-foreground">Requested company</div>
+              <div className="text-muted-foreground">บริษัทที่ร้องขอ</div>
               <div className="text-foreground">{challenge.requestedCompanyName}</div>
             </div>
           )}
@@ -152,13 +152,13 @@ export function CliAuthPage() {
           <p className="mt-4 text-sm text-destructive">
             {(approveMutation.error ?? cancelMutation.error) instanceof Error
               ? ((approveMutation.error ?? cancelMutation.error) as Error).message
-              : "Failed to update CLI auth challenge"}
+              : "ไม่สามารถอัปเดตการยืนยันตัวตน CLI ได้"}
           </p>
         )}
 
         {!challenge.canApprove && (
           <p className="mt-4 text-sm text-destructive">
-            This challenge requires instance-admin access. Sign in with an instance admin account to approve it.
+            คำขอนี้ต้องการสิทธิ์ผู้ดูแลอินสแตนซ์ เข้าสู่ระบบด้วยบัญชีผู้ดูแลอินสแตนซ์เพื่ออนุมัติ
           </p>
         )}
 
@@ -167,7 +167,7 @@ export function CliAuthPage() {
             onClick={() => approveMutation.mutate()}
             disabled={!challenge.canApprove || approveMutation.isPending || cancelMutation.isPending}
           >
-            {approveMutation.isPending ? "Approving..." : "Approve CLI access"}
+            {approveMutation.isPending ? "กำลังอนุมัติ..." : "อนุมัติการเข้าถึง CLI"}
           </Button>
           <Button
             type="button"
@@ -175,7 +175,7 @@ export function CliAuthPage() {
             onClick={() => cancelMutation.mutate()}
             disabled={approveMutation.isPending || cancelMutation.isPending}
           >
-            {cancelMutation.isPending ? "Cancelling..." : "Cancel"}
+            {cancelMutation.isPending ? "กำลังยกเลิก..." : "ยกเลิก"}
           </Button>
         </div>
       </div>

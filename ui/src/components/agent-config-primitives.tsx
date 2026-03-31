@@ -19,42 +19,42 @@ import { AGENT_ROLE_LABELS } from "@paperclipai/shared";
 
 /* ---- Help text for (?) tooltips ---- */
 export const help: Record<string, string> = {
-  name: "Display name for this agent.",
-  title: "Job title shown in the org chart.",
-  role: "Organizational role. Determines position and capabilities.",
-  reportsTo: "The agent this one reports to in the org hierarchy.",
-  capabilities: "Describes what this agent can do. Shown in the org chart and used for task routing.",
-  adapterType: "How this agent runs: local CLI (Claude/Codex/OpenCode), OpenClaw Gateway, spawned process, or generic HTTP webhook.",
-  cwd: "Deprecated legacy working directory fallback for local adapters. Existing agents may still carry this value, but new configurations should use project workspaces instead.",
-  promptTemplate: "Sent on every heartbeat. Keep this small and dynamic. Use it for current-task framing, not large static instructions. Supports {{ agent.id }}, {{ agent.name }}, {{ agent.role }} and other template variables.",
-  model: "Override the default model used by the adapter.",
-  thinkingEffort: "Control model reasoning depth. Supported values vary by adapter/model.",
-  chrome: "Enable Claude's Chrome integration by passing --chrome.",
-  dangerouslySkipPermissions: "Run unattended by auto-approving adapter permission prompts when supported.",
-  dangerouslyBypassSandbox: "Run Codex without sandbox restrictions. Required for filesystem/network access.",
-  search: "Enable Codex web search capability during runs.",
-  workspaceStrategy: "How Paperclip should realize an execution workspace for this agent. Keep project_primary for normal cwd execution, or use git_worktree for issue-scoped isolated checkouts.",
-  workspaceBaseRef: "Base git ref used when creating a worktree branch. Leave blank to use the resolved workspace ref or HEAD.",
-  workspaceBranchTemplate: "Template for naming derived branches. Supports {{issue.identifier}}, {{issue.title}}, {{agent.name}}, {{project.id}}, {{workspace.repoRef}}, and {{slug}}.",
-  worktreeParentDir: "Directory where derived worktrees should be created. Absolute, ~-prefixed, and repo-relative paths are supported.",
-  runtimeServicesJson: "Optional workspace runtime service definitions. Use this for shared app servers, workers, or other long-lived companion processes attached to the workspace.",
-  maxTurnsPerRun: "Maximum number of agentic turns (tool calls) per heartbeat run.",
-  command: "The command to execute (e.g. node, python).",
-  localCommand: "Override the path to the CLI command you want the adapter to call (e.g. /usr/local/bin/claude, codex, opencode).",
-  args: "Command-line arguments, comma-separated.",
-  extraArgs: "Extra CLI arguments for local adapters, comma-separated.",
-  envVars: "Environment variables injected into the adapter process. Use plain values or secret references.",
-  bootstrapPrompt: "Only sent when Paperclip starts a fresh session. Use this for stable setup guidance that should not be repeated on every heartbeat.",
-  payloadTemplateJson: "Optional JSON merged into remote adapter request payloads before Paperclip adds its standard wake and workspace fields.",
-  webhookUrl: "The URL that receives POST requests when the agent is invoked.",
-  heartbeatInterval: "Run this agent automatically on a timer. Useful for periodic tasks like checking for new work.",
-  intervalSec: "Seconds between automatic heartbeat invocations.",
-  timeoutSec: "Maximum seconds a run can take before being terminated. 0 means no timeout.",
-  graceSec: "Seconds to wait after sending interrupt before force-killing the process.",
-  wakeOnDemand: "Allow this agent to be woken by assignments, API calls, UI actions, or automated systems.",
-  cooldownSec: "Minimum seconds between consecutive heartbeat runs.",
-  maxConcurrentRuns: "Maximum number of heartbeat runs that can execute simultaneously for this agent.",
-  budgetMonthlyCents: "Monthly spending limit in cents. 0 means no limit.",
+  name: "ชื่อแสดงผลของเอเจนต์นี้",
+  title: "ตำแหน่งงานที่แสดงในผังองค์กร",
+  role: "บทบาทในองค์กร กำหนดตำแหน่งและความสามารถ",
+  reportsTo: "เอเจนต์ที่เอเจนต์นี้รายงานต่อในลำดับชั้นองค์กร",
+  capabilities: "อธิบายสิ่งที่เอเจนต์นี้ทำได้ แสดงในผังองค์กรและใช้สำหรับการกำหนดเส้นทางงาน",
+  adapterType: "วิธีที่เอเจนต์นี้รัน: CLI ในเครื่อง (Claude/Codex/OpenCode), OpenClaw Gateway, โปรเซสที่สร้างขึ้น หรือ HTTP webhook ทั่วไป",
+  cwd: "ไดเรกทอรีทำงานสำรองแบบเก่าสำหรับอะแดปเตอร์ในเครื่อง เอเจนต์ที่มีอยู่อาจยังมีค่านี้ แต่การกำหนดค่าใหม่ควรใช้เวิร์กสเปซโปรเจกต์แทน",
+  promptTemplate: "ส่งทุกครั้งที่มี heartbeat ควรรักษาให้เล็กและเป็นไดนามิก ใช้สำหรับกรอบงานปัจจุบัน ไม่ใช่คำสั่งคงที่ขนาดใหญ่ รองรับ {{ agent.id }}, {{ agent.name }}, {{ agent.role }} และตัวแปรเทมเพลตอื่น ๆ",
+  model: "แทนที่โมเดลเริ่มต้นที่ใช้โดยอะแดปเตอร์",
+  thinkingEffort: "ควบคุมความลึกของการใช้เหตุผลของโมเดล ค่าที่รองรับแตกต่างกันตามอะแดปเตอร์/โมเดล",
+  chrome: "เปิดใช้การรวม Chrome ของ Claude โดยส่ง --chrome",
+  dangerouslySkipPermissions: "รันโดยไม่ต้องดูแลโดยอนุมัติการขอสิทธิ์ของอะแดปเตอร์โดยอัตโนมัติเมื่อรองรับ",
+  dangerouslyBypassSandbox: "รัน Codex โดยไม่มีข้อจำกัด sandbox จำเป็นสำหรับการเข้าถึงระบบไฟล์/เครือข่าย",
+  search: "เปิดใช้ความสามารถในการค้นหาเว็บของ Codex ระหว่างการรัน",
+  workspaceStrategy: "วิธีที่ Paperclip ควรสร้างเวิร์กสเปซการดำเนินการสำหรับเอเจนต์นี้ ใช้ project_primary สำหรับการรัน cwd ปกติ หรือใช้ git_worktree สำหรับ checkout แยกตามงาน",
+  workspaceBaseRef: "Git ref พื้นฐานที่ใช้เมื่อสร้างสาขา worktree เว้นว่างเพื่อใช้ ref ที่แก้ไขของเวิร์กสเปซหรือ HEAD",
+  workspaceBranchTemplate: "เทมเพลตสำหรับตั้งชื่อสาขาที่สร้าง รองรับ {{issue.identifier}}, {{issue.title}}, {{agent.name}}, {{project.id}}, {{workspace.repoRef}} และ {{slug}}",
+  worktreeParentDir: "ไดเรกทอรีที่ควรสร้าง worktree รองรับ path แบบเต็ม, นำหน้าด้วย ~ และ path สัมพัทธ์กับ repo",
+  runtimeServicesJson: "คำจำกัดความบริการรันไทม์ของเวิร์กสเปซ (ไม่บังคับ) ใช้สำหรับเซิร์ฟเวอร์แอปที่ใช้ร่วมกัน, เวิร์กเกอร์ หรือโปรเซสที่ทำงานต่อเนื่องอื่น ๆ ที่แนบกับเวิร์กสเปซ",
+  maxTurnsPerRun: "จำนวนเทิร์นเอเจนต์สูงสุด (การเรียกเครื่องมือ) ต่อการรัน heartbeat",
+  command: "คำสั่งที่จะดำเนินการ (เช่น node, python)",
+  localCommand: "แทนที่ path ไปยังคำสั่ง CLI ที่คุณต้องการให้อะแดปเตอร์เรียก (เช่น /usr/local/bin/claude, codex, opencode)",
+  args: "อาร์กิวเมนต์บรรทัดคำสั่ง คั่นด้วยจุลภาค",
+  extraArgs: "อาร์กิวเมนต์ CLI เพิ่มเติมสำหรับอะแดปเตอร์ในเครื่อง คั่นด้วยจุลภาค",
+  envVars: "ตัวแปรสภาพแวดล้อมที่ฉีดเข้าไปในโปรเซสอะแดปเตอร์ ใช้ค่าธรรมดาหรือการอ้างอิง secret",
+  bootstrapPrompt: "ส่งเฉพาะเมื่อ Paperclip เริ่มเซสชันใหม่ ใช้สำหรับคำแนะนำการตั้งค่าที่คงที่ซึ่งไม่ควรทำซ้ำทุกครั้งที่มี heartbeat",
+  payloadTemplateJson: "JSON ทางเลือกที่รวมเข้ากับ payload คำขออะแดปเตอร์ระยะไกลก่อนที่ Paperclip จะเพิ่มฟิลด์ wake และ workspace มาตรฐาน",
+  webhookUrl: "URL ที่รับคำขอ POST เมื่อเอเจนต์ถูกเรียกใช้",
+  heartbeatInterval: "รันเอเจนต์นี้โดยอัตโนมัติตามตัวจับเวลา มีประโยชน์สำหรับงานเป็นระยะเช่นการตรวจสอบงานใหม่",
+  intervalSec: "วินาทีระหว่างการเรียก heartbeat อัตโนมัติ",
+  timeoutSec: "วินาทีสูงสุดที่การรันสามารถใช้ก่อนถูกยกเลิก 0 หมายถึงไม่มีการหมดเวลา",
+  graceSec: "วินาทีที่รอหลังส่งการขัดจังหวะก่อนบังคับยุติโปรเซส",
+  wakeOnDemand: "อนุญาตให้เอเจนต์นี้ถูกปลุกโดยการมอบหมาย, การเรียก API, การดำเนินการ UI หรือระบบอัตโนมัติ",
+  cooldownSec: "วินาทีขั้นต่ำระหว่างการรัน heartbeat ต่อเนื่อง",
+  maxConcurrentRuns: "จำนวนการรัน heartbeat สูงสุดที่สามารถดำเนินการพร้อมกันสำหรับเอเจนต์นี้",
+  budgetMonthlyCents: "ค่าใช้จ่ายรายเดือนสูงสุดเป็นเซ็นต์ 0 หมายถึงไม่จำกัด",
 };
 
 export const adapterLabels: Record<string, string> = {
@@ -404,25 +404,25 @@ export function ChoosePathButton() {
         className="inline-flex items-center rounded-md border border-border px-2 py-0.5 text-xs text-muted-foreground hover:bg-accent/50 transition-colors shrink-0"
         onClick={() => setOpen(true)}
       >
-        Choose
+        เลือก
       </button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Specify path manually</DialogTitle>
+            <DialogTitle>ระบุ path ด้วยตนเอง</DialogTitle>
             <DialogDescription>
-              Browser security blocks apps from reading full local paths via a file picker.
-              Copy the absolute path and paste it into the input.
+              ความปลอดภัยของเบราว์เซอร์บล็อกแอปจากการอ่าน path ในเครื่องแบบเต็มผ่านตัวเลือกไฟล์
+              คัดลอก path แบบเต็มแล้ววางลงในช่องป้อนข้อมูล
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 text-sm">
             <section className="space-y-1.5">
               <p className="font-medium">macOS (Finder)</p>
               <ol className="list-decimal space-y-1 pl-5 text-muted-foreground">
-                <li>Find the folder in Finder.</li>
-                <li>Hold <kbd>Option</kbd> and right-click the folder.</li>
-                <li>Click "Copy &lt;folder name&gt; as Pathname".</li>
-                <li>Paste the result into the path input.</li>
+                <li>ค้นหาโฟลเดอร์ใน Finder</li>
+                <li>กด <kbd>Option</kbd> ค้างไว้แล้วคลิกขวาที่โฟลเดอร์</li>
+                <li>คลิก "Copy &lt;ชื่อโฟลเดอร์&gt; as Pathname"</li>
+                <li>วางผลลัพธ์ลงในช่อง path</li>
               </ol>
               <p className="rounded-md bg-muted px-2 py-1 font-mono text-xs">
                 /Users/yourname/Documents/project
@@ -431,27 +431,27 @@ export function ChoosePathButton() {
             <section className="space-y-1.5">
               <p className="font-medium">Windows (File Explorer)</p>
               <ol className="list-decimal space-y-1 pl-5 text-muted-foreground">
-                <li>Find the folder in File Explorer.</li>
-                <li>Hold <kbd>Shift</kbd> and right-click the folder.</li>
-                <li>Click "Copy as path".</li>
-                <li>Paste the result into the path input.</li>
+                <li>ค้นหาโฟลเดอร์ใน File Explorer</li>
+                <li>กด <kbd>Shift</kbd> ค้างไว้แล้วคลิกขวาที่โฟลเดอร์</li>
+                <li>คลิก "Copy as path"</li>
+                <li>วางผลลัพธ์ลงในช่อง path</li>
               </ol>
               <p className="rounded-md bg-muted px-2 py-1 font-mono text-xs">
                 C:\Users\yourname\Documents\project
               </p>
             </section>
             <section className="space-y-1.5">
-              <p className="font-medium">Terminal fallback (macOS/Linux)</p>
+              <p className="font-medium">Terminal สำรอง (macOS/Linux)</p>
               <ol className="list-decimal space-y-1 pl-5 text-muted-foreground">
-                <li>Run <code>cd /path/to/folder</code>.</li>
-                <li>Run <code>pwd</code>.</li>
-                <li>Copy the output and paste it into the path input.</li>
+                <li>รัน <code>cd /path/to/folder</code></li>
+                <li>รัน <code>pwd</code></li>
+                <li>คัดลอกผลลัพธ์แล้ววางลงในช่อง path</li>
               </ol>
             </section>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)}>
-              OK
+              ตกลง
             </Button>
           </DialogFooter>
         </DialogContent>

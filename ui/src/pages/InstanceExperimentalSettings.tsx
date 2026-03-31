@@ -13,8 +13,8 @@ export function InstanceExperimentalSettings() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Instance Settings" },
-      { label: "Experimental" },
+      { label: "ตั้งค่าอินสแตนซ์" },
+      { label: "ทดลอง" },
     ]);
   }, [setBreadcrumbs]);
 
@@ -34,12 +34,12 @@ export function InstanceExperimentalSettings() {
       ]);
     },
     onError: (error) => {
-      setActionError(error instanceof Error ? error.message : "Failed to update experimental settings.");
+      setActionError(error instanceof Error ? error.message : "ไม่สามารถอัปเดตการตั้งค่าทดลองได้");
     },
   });
 
   if (experimentalQuery.isLoading) {
-    return <div className="text-sm text-muted-foreground">Loading experimental settings...</div>;
+    return <div className="text-sm text-muted-foreground">กำลังโหลดการตั้งค่าทดลอง...</div>;
   }
 
   if (experimentalQuery.error) {
@@ -47,7 +47,7 @@ export function InstanceExperimentalSettings() {
       <div className="text-sm text-destructive">
         {experimentalQuery.error instanceof Error
           ? experimentalQuery.error.message
-          : "Failed to load experimental settings."}
+          : "ไม่สามารถโหลดการตั้งค่าทดลองได้"}
       </div>
     );
   }
@@ -60,10 +60,10 @@ export function InstanceExperimentalSettings() {
       <div className="space-y-2">
         <div className="flex items-center gap-2">
           <FlaskConical className="h-5 w-5 text-muted-foreground" />
-          <h1 className="text-lg font-semibold">Experimental</h1>
+          <h1 className="text-lg font-semibold">ทดลอง</h1>
         </div>
         <p className="text-sm text-muted-foreground">
-          Opt into features that are still being evaluated before they become default behavior.
+          เลือกใช้ฟีเจอร์ที่ยังอยู่ระหว่างการประเมินก่อนที่จะกลายเป็นพฤติกรรมเริ่มต้น
         </p>
       </div>
 
@@ -76,16 +76,15 @@ export function InstanceExperimentalSettings() {
       <section className="rounded-xl border border-border bg-card p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1.5">
-            <h2 className="text-sm font-semibold">Enable Isolated Workspaces</h2>
+            <h2 className="text-sm font-semibold">เปิดใช้งานพื้นที่ทำงานแยก</h2>
             <p className="max-w-2xl text-sm text-muted-foreground">
-              Show execution workspace controls in project configuration and allow isolated workspace behavior for new
-              and existing issue runs.
+              แสดงตัวควบคุมพื้นที่ทำงานในการตั้งค่าโปรเจกต์ และอนุญาตพฤติกรรมพื้นที่ทำงานแยกสำหรับการรันงานใหม่และที่มีอยู่
             </p>
           </div>
           <button
             type="button"
             data-slot="toggle"
-            aria-label="Toggle isolated workspaces experimental setting"
+            aria-label="สลับการตั้งค่าทดลองพื้นที่ทำงานแยก"
             disabled={toggleMutation.isPending}
             className={cn(
               "relative inline-flex h-5 w-9 items-center rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-60",
@@ -106,16 +105,15 @@ export function InstanceExperimentalSettings() {
       <section className="rounded-xl border border-border bg-card p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1.5">
-            <h2 className="text-sm font-semibold">Auto-Restart Dev Server When Idle</h2>
+            <h2 className="text-sm font-semibold">รีสตาร์ทเซิร์ฟเวอร์ dev อัตโนมัติเมื่อว่าง</h2>
             <p className="max-w-2xl text-sm text-muted-foreground">
-              In `pnpm dev:once`, wait for all queued and running local agent runs to finish, then restart the server
-              automatically when backend changes or migrations make the current boot stale.
+              ใน `pnpm dev:once` รอให้การรันเอเจนต์ในเครื่องทั้งหมดที่อยู่ในคิวและกำลังทำงานเสร็จสิ้น จากนั้นรีสตาร์ทเซิร์ฟเวอร์โดยอัตโนมัติเมื่อการเปลี่ยนแปลงแบ็กเอนด์หรือการย้ายข้อมูลทำให้การบูตปัจจุบันล้าสมัย
             </p>
           </div>
           <button
             type="button"
             data-slot="toggle"
-            aria-label="Toggle guarded dev-server auto-restart"
+            aria-label="สลับการรีสตาร์ทเซิร์ฟเวอร์ dev อัตโนมัติ"
             disabled={toggleMutation.isPending}
             className={cn(
               "relative inline-flex h-5 w-9 items-center rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-60",

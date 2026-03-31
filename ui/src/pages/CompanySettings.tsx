@@ -199,15 +199,15 @@ export function CompanySettings() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: selectedCompany?.name ?? "Company", href: "/dashboard" },
-      { label: "Settings" }
+      { label: selectedCompany?.name ?? "บริษัท", href: "/dashboard" },
+      { label: "ตั้งค่า" }
     ]);
   }, [setBreadcrumbs, selectedCompany?.name]);
 
   if (!selectedCompany) {
     return (
       <div className="text-sm text-muted-foreground">
-        No company selected. Select a company from the switcher above.
+        ยังไม่ได้เลือกบริษัท เลือกบริษัทจากตัวเลือกด้านบน
       </div>
     );
   }
@@ -224,16 +224,16 @@ export function CompanySettings() {
     <div className="max-w-2xl space-y-6">
       <div className="flex items-center gap-2">
         <Settings className="h-5 w-5 text-muted-foreground" />
-        <h1 className="text-lg font-semibold">Company Settings</h1>
+        <h1 className="text-lg font-semibold">ตั้งค่าบริษัท</h1>
       </div>
 
       {/* General */}
       <div className="space-y-4">
         <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-          General
+          ทั่วไป
         </div>
         <div className="space-y-3 rounded-md border border-border px-4 py-4">
-          <Field label="Company name" hint="The display name for your company.">
+          <Field label="ชื่อบริษัท" hint="ชื่อที่แสดงของบริษัทของคุณ">
             <input
               className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
               type="text"
@@ -242,14 +242,14 @@ export function CompanySettings() {
             />
           </Field>
           <Field
-            label="Description"
-            hint="Optional description shown in the company profile."
+            label="คำอธิบาย"
+            hint="คำอธิบายเพิ่มเติมที่แสดงในโปรไฟล์บริษัท"
           >
             <input
               className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
               type="text"
               value={description}
-              placeholder="Optional company description"
+              placeholder="คำอธิบายบริษัท (ไม่บังคับ)"
               onChange={(e) => setDescription(e.target.value)}
             />
           </Field>
@@ -259,7 +259,7 @@ export function CompanySettings() {
       {/* Appearance */}
       <div className="space-y-4">
         <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-          Appearance
+          รูปลักษณ์
         </div>
         <div className="space-y-3 rounded-md border border-border px-4 py-4">
           <div className="flex items-start gap-4">
@@ -273,8 +273,8 @@ export function CompanySettings() {
             </div>
             <div className="flex-1 space-y-3">
               <Field
-                label="Logo"
-                hint="Upload a PNG, JPEG, WEBP, GIF, or SVG logo image."
+                label="โลโก้"
+                hint="อัปโหลดภาพโลโก้ PNG, JPEG, WEBP, GIF หรือ SVG"
               >
                 <div className="space-y-2">
                   <input
@@ -291,7 +291,7 @@ export function CompanySettings() {
                         onClick={handleClearLogo}
                         disabled={clearLogoMutation.isPending}
                       >
-                        {clearLogoMutation.isPending ? "Removing..." : "Remove logo"}
+                        {clearLogoMutation.isPending ? "กำลังลบ..." : "ลบโลโก้"}
                       </Button>
                     </div>
                   )}
@@ -300,7 +300,7 @@ export function CompanySettings() {
                       {logoUploadError ??
                         (logoUploadMutation.error instanceof Error
                           ? logoUploadMutation.error.message
-                          : "Logo upload failed")}
+                          : "อัปโหลดโลโก้ล้มเหลว")}
                     </span>
                   )}
                   {clearLogoMutation.isError && (
@@ -309,13 +309,13 @@ export function CompanySettings() {
                     </span>
                   )}
                   {logoUploadMutation.isPending && (
-                    <span className="text-xs text-muted-foreground">Uploading logo...</span>
+                    <span className="text-xs text-muted-foreground">กำลังอัปโหลดโลโก้...</span>
                   )}
                 </div>
               </Field>
               <Field
-                label="Brand color"
-                hint="Sets the hue for the company icon. Leave empty for auto-generated color."
+                label="สีแบรนด์"
+                hint="กำหนดโทนสีสำหรับไอคอนบริษัท เว้นว่างเพื่อใช้สีอัตโนมัติ"
               >
                 <div className="flex items-center gap-2">
                   <input
@@ -333,7 +333,7 @@ export function CompanySettings() {
                         setBrandColor(v);
                       }
                     }}
-                    placeholder="Auto"
+                    placeholder="อัตโนมัติ"
                     className="w-28 rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm font-mono outline-none"
                   />
                   {brandColor && (
@@ -343,7 +343,7 @@ export function CompanySettings() {
                       onClick={() => setBrandColor("")}
                       className="text-xs text-muted-foreground"
                     >
-                      Clear
+                      ล้าง
                     </Button>
                   )}
                 </div>
@@ -361,16 +361,16 @@ export function CompanySettings() {
             onClick={handleSaveGeneral}
             disabled={generalMutation.isPending || !companyName.trim()}
           >
-            {generalMutation.isPending ? "Saving..." : "Save changes"}
+            {generalMutation.isPending ? "กำลังบันทึก..." : "บันทึกการเปลี่ยนแปลง"}
           </Button>
           {generalMutation.isSuccess && (
-            <span className="text-xs text-muted-foreground">Saved</span>
+            <span className="text-xs text-muted-foreground">บันทึกแล้ว</span>
           )}
           {generalMutation.isError && (
             <span className="text-xs text-destructive">
               {generalMutation.error instanceof Error
                   ? generalMutation.error.message
-                  : "Failed to save"}
+                  : "บันทึกล้มเหลว"}
             </span>
           )}
         </div>
@@ -379,12 +379,12 @@ export function CompanySettings() {
       {/* Hiring */}
       <div className="space-y-4">
         <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-          Hiring
+          การจ้างงาน
         </div>
         <div className="rounded-md border border-border px-4 py-3">
           <ToggleField
-            label="Require board approval for new hires"
-            hint="New agent hires stay pending until approved by board."
+            label="ต้องได้รับอนุมัติจากบอร์ดสำหรับการจ้างงานใหม่"
+            hint="การจ้างเอเจนต์ใหม่จะรอดำเนินการจนกว่าจะได้รับอนุมัติจากบอร์ด"
             checked={!!selectedCompany.requireBoardApprovalForNewAgents}
             onChange={(v) => settingsMutation.mutate(v)}
           />
@@ -394,14 +394,14 @@ export function CompanySettings() {
       {/* Invites */}
       <div className="space-y-4">
         <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-          Invites
+          คำเชิญ
         </div>
         <div className="space-y-3 rounded-md border border-border px-4 py-4">
           <div className="flex items-center gap-1.5">
             <span className="text-xs text-muted-foreground">
-              Generate an OpenClaw agent invite snippet.
+              สร้างสนิปเป็ตคำเชิญเอเจนต์ OpenClaw
             </span>
-            <HintIcon text="Creates a short-lived OpenClaw agent invite and renders a copy-ready prompt." />
+            <HintIcon text="สร้างคำเชิญเอเจนต์ OpenClaw แบบใช้ครั้งเดียวและแสดงพรอมต์ที่พร้อมคัดลอก" />
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <Button
@@ -410,8 +410,8 @@ export function CompanySettings() {
               disabled={inviteMutation.isPending}
             >
               {inviteMutation.isPending
-                ? "Generating..."
-                : "Generate OpenClaw Invite Prompt"}
+                ? "กำลังสร้าง..."
+                : "สร้างพรอมต์คำเชิญ OpenClaw"}
             </Button>
           </div>
           {inviteError && (
@@ -421,7 +421,7 @@ export function CompanySettings() {
             <div className="rounded-md border border-border bg-muted/30 p-2">
               <div className="flex items-center justify-between gap-2">
                 <div className="text-xs text-muted-foreground">
-                  OpenClaw Invite Prompt
+                  พรอมต์คำเชิญ OpenClaw
                 </div>
                 {snippetCopied && (
                   <span
@@ -429,7 +429,7 @@ export function CompanySettings() {
                     className="flex items-center gap-1 text-xs text-green-600 animate-pulse"
                   >
                     <Check className="h-3 w-3" />
-                    Copied
+                    คัดลอกแล้ว
                   </span>
                 )}
               </div>
@@ -454,7 +454,7 @@ export function CompanySettings() {
                       }
                     }}
                   >
-                    {snippetCopied ? "Copied snippet" : "Copy snippet"}
+                    {snippetCopied ? "คัดลอกสนิปเป็ตแล้ว" : "คัดลอกสนิปเป็ต"}
                   </Button>
                 </div>
               </div>
@@ -466,24 +466,24 @@ export function CompanySettings() {
       {/* Import / Export */}
       <div className="space-y-4">
         <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-          Company Packages
+          แพ็กเกจบริษัท
         </div>
         <div className="rounded-md border border-border px-4 py-4">
           <p className="text-sm text-muted-foreground">
-            Import and export have moved to dedicated pages accessible from the{" "}
-            <a href="/org" className="underline hover:text-foreground">Org Chart</a> header.
+            การนำเข้าและส่งออกได้ย้ายไปยังหน้าเฉพาะที่เข้าถึงได้จากส่วนหัว{" "}
+            <a href="/org" className="underline hover:text-foreground">ผังองค์กร</a>
           </p>
           <div className="mt-3 flex items-center gap-2">
             <Button size="sm" variant="outline" asChild>
               <a href="/company/export">
                 <Download className="mr-1.5 h-3.5 w-3.5" />
-                Export
+                ส่งออก
               </a>
             </Button>
             <Button size="sm" variant="outline" asChild>
               <a href="/company/import">
                 <Upload className="mr-1.5 h-3.5 w-3.5" />
-                Import
+                นำเข้า
               </a>
             </Button>
           </div>
@@ -493,12 +493,11 @@ export function CompanySettings() {
       {/* Danger Zone */}
       <div className="space-y-4">
         <div className="text-xs font-medium text-destructive uppercase tracking-wide">
-          Danger Zone
+          โซนอันตราย
         </div>
         <div className="space-y-3 rounded-md border border-destructive/40 bg-destructive/5 px-4 py-4">
           <p className="text-sm text-muted-foreground">
-            Archive this company to hide it from the sidebar. This persists in
-            the database.
+            จัดเก็บบริษัทนี้เพื่อซ่อนจากแถบด้านข้าง ข้อมูลจะยังคงอยู่ในฐานข้อมูล
           </p>
           <div className="flex items-center gap-2">
             <Button
@@ -511,7 +510,7 @@ export function CompanySettings() {
               onClick={() => {
                 if (!selectedCompanyId) return;
                 const confirmed = window.confirm(
-                  `Archive company "${selectedCompany.name}"? It will be hidden from the sidebar.`
+                  `จัดเก็บบริษัท "${selectedCompany.name}"? บริษัทจะถูกซ่อนจากแถบด้านข้าง`
                 );
                 if (!confirmed) return;
                 const nextCompanyId =
@@ -527,16 +526,16 @@ export function CompanySettings() {
               }}
             >
               {archiveMutation.isPending
-                ? "Archiving..."
+                ? "กำลังจัดเก็บ..."
                 : selectedCompany.status === "archived"
-                ? "Already archived"
-                : "Archive company"}
+                ? "จัดเก็บแล้ว"
+                : "จัดเก็บบริษัท"}
             </Button>
             {archiveMutation.isError && (
               <span className="text-xs text-destructive">
                 {archiveMutation.error instanceof Error
                   ? archiveMutation.error.message
-                  : "Failed to archive company"}
+                  : "จัดเก็บบริษัทล้มเหลว"}
               </span>
             )}
           </div>

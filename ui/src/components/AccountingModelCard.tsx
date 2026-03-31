@@ -3,24 +3,24 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 
 const SURFACES = [
   {
-    title: "Inference ledger",
-    description: "Request-scoped usage and billed runs from cost_events.",
+    title: "บัญชีแยกประเภทการอนุมาน",
+    description: "การใช้งานระดับคำขอและการรันที่เรียกเก็บเงินจาก cost_events",
     icon: Database,
-    points: ["tokens + billed dollars", "provider, biller, model", "subscription and overage aware"],
+    points: ["โทเค็น + ดอลลาร์ที่เรียกเก็บ", "ผู้ให้บริการ, ผู้เรียกเก็บ, โมเดล", "รองรับสมัครสมาชิกและเกินวงเงิน"],
     tone: "from-sky-500/12 via-sky-500/6 to-transparent",
   },
   {
-    title: "Finance ledger",
-    description: "Account-level charges that are not one prompt-response pair.",
+    title: "บัญชีแยกประเภทการเงิน",
+    description: "ค่าใช้จ่ายระดับบัญชีที่ไม่ใช่คู่คำถาม-คำตอบ",
     icon: ReceiptText,
-    points: ["top-ups, refunds, fees", "Bedrock provisioned or training charges", "credit expiries and adjustments"],
+    points: ["การเติมเงิน, การคืนเงิน, ค่าธรรมเนียม", "ค่า Bedrock provisioned หรือการฝึกอบรม", "เครดิตหมดอายุและการปรับปรุง"],
     tone: "from-amber-500/14 via-amber-500/6 to-transparent",
   },
   {
-    title: "Live quotas",
-    description: "Provider or biller windows that can stop traffic in real time.",
+    title: "โควตาสด",
+    description: "หน้าต่างผู้ให้บริการหรือผู้เรียกเก็บที่สามารถหยุดการรับส่งข้อมูลแบบเรียลไทม์",
     icon: Gauge,
-    points: ["provider quota windows", "biller credit systems", "errors surfaced directly"],
+    points: ["หน้าต่างโควตาผู้ให้บริการ", "ระบบเครดิตผู้เรียกเก็บ", "แสดงข้อผิดพลาดโดยตรง"],
     tone: "from-emerald-500/14 via-emerald-500/6 to-transparent",
   },
 ] as const;
@@ -31,11 +31,11 @@ export function AccountingModelCard() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,114,182,0.08),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(56,189,248,0.1),transparent_32%)]" />
       <CardHeader className="relative px-5 pt-5 pb-2">
         <CardTitle className="text-sm font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-          Accounting model
+          โมเดลการบัญชี
         </CardTitle>
         <CardDescription className="max-w-2xl text-sm leading-6">
-          Paperclip now separates request-level inference usage from account-level finance events.
-          That keeps provider reporting honest when the biller is OpenRouter, Cloudflare, Bedrock, or another intermediary.
+          Paperclip แยกการใช้งานการอนุมานระดับคำขอออกจากเหตุการณ์ทางการเงินระดับบัญชี
+          เพื่อให้การรายงานของผู้ให้บริการถูกต้องเมื่อผู้เรียกเก็บเป็น OpenRouter, Cloudflare, Bedrock หรือตัวกลางอื่น
         </CardDescription>
       </CardHeader>
       <CardContent className="relative grid gap-3 px-5 pb-5 md:grid-cols-3">

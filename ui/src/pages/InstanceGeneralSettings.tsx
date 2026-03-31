@@ -13,8 +13,8 @@ export function InstanceGeneralSettings() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Instance Settings" },
-      { label: "General" },
+      { label: "ตั้งค่าอินสแตนซ์" },
+      { label: "ทั่วไป" },
     ]);
   }, [setBreadcrumbs]);
 
@@ -31,12 +31,12 @@ export function InstanceGeneralSettings() {
       await queryClient.invalidateQueries({ queryKey: queryKeys.instance.generalSettings });
     },
     onError: (error) => {
-      setActionError(error instanceof Error ? error.message : "Failed to update general settings.");
+      setActionError(error instanceof Error ? error.message : "ไม่สามารถอัปเดตการตั้งค่าทั่วไปได้");
     },
   });
 
   if (generalQuery.isLoading) {
-    return <div className="text-sm text-muted-foreground">Loading general settings...</div>;
+    return <div className="text-sm text-muted-foreground">กำลังโหลดการตั้งค่าทั่วไป...</div>;
   }
 
   if (generalQuery.error) {
@@ -44,7 +44,7 @@ export function InstanceGeneralSettings() {
       <div className="text-sm text-destructive">
         {generalQuery.error instanceof Error
           ? generalQuery.error.message
-          : "Failed to load general settings."}
+          : "ไม่สามารถโหลดการตั้งค่าทั่วไปได้"}
       </div>
     );
   }
@@ -56,10 +56,10 @@ export function InstanceGeneralSettings() {
       <div className="space-y-2">
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="h-5 w-5 text-muted-foreground" />
-          <h1 className="text-lg font-semibold">General</h1>
+          <h1 className="text-lg font-semibold">ทั่วไป</h1>
         </div>
         <p className="text-sm text-muted-foreground">
-          Configure instance-wide defaults that affect how operator-visible logs are displayed.
+          กำหนดค่าเริ่มต้นระดับอินสแตนซ์ที่ส่งผลต่อการแสดงผลบันทึกที่ผู้ดำเนินการมองเห็นได้
         </p>
       </div>
 
@@ -72,17 +72,15 @@ export function InstanceGeneralSettings() {
       <section className="rounded-xl border border-border bg-card p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1.5">
-            <h2 className="text-sm font-semibold">Censor username in logs</h2>
+            <h2 className="text-sm font-semibold">ซ่อนชื่อผู้ใช้ในบันทึก</h2>
             <p className="max-w-2xl text-sm text-muted-foreground">
-              Hide the username segment in home-directory paths and similar operator-visible log output. Standalone
-              username mentions outside of paths are not yet masked in the live transcript view. This is off by
-              default.
+              ซ่อนส่วนชื่อผู้ใช้ในเส้นทางไดเรกทอรีหลักและผลลัพธ์บันทึกที่ผู้ดำเนินการมองเห็นได้ที่คล้ายกัน การกล่าวถึงชื่อผู้ใช้แบบแยกเดี่ยวนอกเส้นทางยังไม่ถูกปิดบังในมุมมองการถ่ายทอดสด ค่าเริ่มต้นคือปิด
             </p>
           </div>
           <button
             type="button"
             data-slot="toggle"
-            aria-label="Toggle username log censoring"
+            aria-label="สลับการซ่อนชื่อผู้ใช้ในบันทึก"
             disabled={toggleMutation.isPending}
             className={cn(
               "relative inline-flex h-5 w-9 items-center rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-60",

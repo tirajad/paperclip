@@ -15,9 +15,9 @@ import { Check, Copy, GitBranch, FolderOpen, Pencil, X } from "lucide-react";
 /* -------------------------------------------------------------------------- */
 
 const EXECUTION_WORKSPACE_OPTIONS = [
-  { value: "shared_workspace", label: "Project default" },
-  { value: "isolated_workspace", label: "New isolated workspace" },
-  { value: "reuse_existing", label: "Reuse existing workspace" },
+  { value: "shared_workspace", label: "ค่าเริ่มต้นโปรเจกต์" },
+  { value: "isolated_workspace", label: "พื้นที่ทำงานแยกใหม่" },
+  { value: "reuse_existing", label: "ใช้พื้นที่ทำงานที่มีอยู่" },
 ] as const;
 
 function issueModeForExistingWorkspace(mode: string | null | undefined) {
@@ -80,7 +80,7 @@ function CopyableInline({ value, label, mono }: { value: string; label?: string;
         type="button"
         className="shrink-0 p-0.5 rounded hover:bg-accent/50 transition-colors text-muted-foreground hover:text-foreground opacity-0 group-hover/copy:opacity-100 focus:opacity-100"
         onClick={handleCopy}
-        title={copied ? "Copied!" : "Copy"}
+        title={copied ? "คัดลอกแล้ว!" : "คัดลอก"}
       >
         {copied ? <Check className="h-3 w-3 text-green-500" /> : <Copy className="h-3 w-3" />}
       </button>
@@ -90,11 +90,11 @@ function CopyableInline({ value, label, mono }: { value: string; label?: string;
 
 function workspaceModeLabel(mode: string | null | undefined) {
   switch (mode) {
-    case "isolated_workspace": return "Isolated workspace";
-    case "operator_branch": return "Operator branch";
-    case "cloud_sandbox": return "Cloud sandbox";
-    case "adapter_managed": return "Adapter managed";
-    default: return "Workspace";
+    case "isolated_workspace": return "พื้นที่ทำงานแยก";
+    case "operator_branch": return "สาขาผู้ดำเนินการ";
+    case "cloud_sandbox": return "แซนด์บ็อกซ์คลาวด์";
+    case "adapter_managed": return "จัดการโดยอะแดปเตอร์";
+    default: return "พื้นที่ทำงาน";
   }
 }
 
@@ -104,13 +104,13 @@ function configuredWorkspaceLabel(
 ) {
   switch (selection) {
     case "isolated_workspace":
-      return "New isolated workspace";
+      return "พื้นที่ทำงานแยกใหม่";
     case "reuse_existing":
       return reusableWorkspace?.mode === "isolated_workspace"
-        ? "Existing isolated workspace"
-        : "Reuse existing workspace";
+        ? "พื้นที่ทำงานแยกที่มีอยู่"
+        : "ใช้พื้นที่ทำงานที่มีอยู่";
     default:
-      return "Project default";
+      return "ค่าเริ่มต้นโปรเจกต์";
   }
 }
 
@@ -260,7 +260,7 @@ export function IssueWorkspaceCard({ issue, project, onUpdate }: IssueWorkspaceC
                 className="h-6 px-2 text-xs text-muted-foreground"
                 onClick={handleCancel}
               >
-                <X className="h-3 w-3 mr-1" />Cancel
+                <X className="h-3 w-3 mr-1" />ยกเลิก
               </Button>
               <Button
                 size="sm"
@@ -268,7 +268,7 @@ export function IssueWorkspaceCard({ issue, project, onUpdate }: IssueWorkspaceC
                 onClick={handleSave}
                 disabled={!canSaveWorkspaceConfig}
               >
-                Save
+                บันทึก
               </Button>
             </>
           ) : (
@@ -278,7 +278,7 @@ export function IssueWorkspaceCard({ issue, project, onUpdate }: IssueWorkspaceC
               className="h-6 px-2 text-xs text-muted-foreground"
               onClick={() => setEditing(true)}
             >
-              <Pencil className="h-3 w-3 mr-1" />Edit
+              <Pencil className="h-3 w-3 mr-1" />แก้ไข
             </Button>
           )}
         </div>
@@ -301,22 +301,22 @@ export function IssueWorkspaceCard({ issue, project, onUpdate }: IssueWorkspaceC
           )}
           {workspace?.repoUrl && (
             <div className="flex items-center gap-1.5 text-muted-foreground">
-              <span className="text-[11px]">Repo:</span>
+              <span className="text-[11px]">คลัง:</span>
               <CopyableInline value={workspace.repoUrl} mono />
             </div>
           )}
           {!workspace && (
             <div className="text-muted-foreground">
               {currentSelection === "isolated_workspace"
-                ? "A fresh isolated workspace will be created when this issue runs."
+                ? "พื้นที่ทำงานแยกใหม่จะถูกสร้างเมื่องานนี้ทำงาน"
                 : currentSelection === "reuse_existing"
-                  ? "This issue will reuse an existing workspace when it runs."
-                  : "This issue will use the project default workspace configuration when it runs."}
+                  ? "งานนี้จะใช้พื้นที่ทำงานที่มีอยู่เมื่อทำงาน"
+                  : "งานนี้จะใช้การกำหนดค่าพื้นที่ทำงานเริ่มต้นของโปรเจกต์เมื่อทำงาน"}
             </div>
           )}
           {currentSelection === "reuse_existing" && selectedReusableExecutionWorkspace && (
             <div className="text-muted-foreground" style={{ overflowWrap: "anywhere" }}>
-              Reusing:{" "}
+              ใช้ซ้ำ:{" "}
               <Link
                 to={`/execution-workspaces/${selectedReusableExecutionWorkspace.id}`}
                 className="hover:text-foreground hover:underline"
@@ -331,7 +331,7 @@ export function IssueWorkspaceCard({ issue, project, onUpdate }: IssueWorkspaceC
                 to={`/execution-workspaces/${workspace.id}`}
                 className="text-[11px] text-muted-foreground hover:text-foreground hover:underline"
               >
-                View workspace details →
+                ดูรายละเอียดพื้นที่ทำงาน →
               </Link>
             </div>
           )}
@@ -357,7 +357,7 @@ export function IssueWorkspaceCard({ issue, project, onUpdate }: IssueWorkspaceC
             {EXECUTION_WORKSPACE_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.value === "reuse_existing" && configuredReusableWorkspace?.mode === "isolated_workspace"
-                  ? "Existing isolated workspace"
+                  ? "พื้นที่ทำงานแยกที่มีอยู่"
                   : option.label}
               </option>
             ))}
@@ -371,7 +371,7 @@ export function IssueWorkspaceCard({ issue, project, onUpdate }: IssueWorkspaceC
                 setDraftExecutionWorkspaceId(e.target.value);
               }}
             >
-              <option value="">Choose an existing workspace</option>
+              <option value="">เลือกพื้นที่ทำงานที่มีอยู่</option>
               {deduplicatedReusableWorkspaces.map((w) => (
                 <option key={w.id} value={w.id}>
                   {w.name} · {w.status} · {w.branchName ?? w.cwd ?? w.id.slice(0, 8)}
@@ -384,7 +384,7 @@ export function IssueWorkspaceCard({ issue, project, onUpdate }: IssueWorkspaceC
           {workspace && (
             <div className="text-[11px] text-muted-foreground space-y-0.5 pt-1 border-t border-border/50">
               <div style={{ overflowWrap: "anywhere" }}>
-                Current:{" "}
+                ปัจจุบัน:{" "}
                 <Link
                   to={`/execution-workspaces/${workspace.id}`}
                   className="hover:text-foreground hover:underline"

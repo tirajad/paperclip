@@ -111,34 +111,34 @@ function FinanceSummaryCard({
   return (
     <Card>
       <CardHeader className="px-5 pt-5 pb-2">
-        <CardTitle className="text-base">Finance ledger</CardTitle>
+        <CardTitle className="text-base">บัญชีการเงิน</CardTitle>
         <CardDescription>
-          Account-level charges that do not map to a single inference request.
+          ค่าใช้จ่ายระดับบัญชีที่ไม่ได้ผูกกับคำขอ inference เดียว
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-3 px-5 pb-5 pt-2 sm:grid-cols-2 xl:grid-cols-4">
         <MetricTile
-          label="Debits"
+          label="เดบิต"
           value={formatCents(debitCents)}
-          subtitle={`${eventCount} total event${eventCount === 1 ? "" : "s"} in range`}
+          subtitle={`${eventCount} เหตุการณ์ทั้งหมดในช่วงเวลา`}
           icon={ArrowUpRight}
         />
         <MetricTile
-          label="Credits"
+          label="เครดิต"
           value={formatCents(creditCents)}
-          subtitle="Refunds, offsets, and credit returns"
+          subtitle="การคืนเงิน การหักกลบ และการคืนเครดิต"
           icon={ArrowDownLeft}
         />
         <MetricTile
-          label="Net"
+          label="สุทธิ"
           value={formatCents(netCents)}
-          subtitle="Debit minus credit for the selected period"
+          subtitle="เดบิตลบเครดิตสำหรับช่วงเวลาที่เลือก"
           icon={ReceiptText}
         />
         <MetricTile
-          label="Estimated"
+          label="ประมาณการ"
           value={formatCents(estimatedDebitCents)}
-          subtitle="Estimated debits that are not yet invoice-authoritative"
+          subtitle="เดบิตโดยประมาณที่ยังไม่ได้ยืนยันในใบแจ้งหนี้"
           icon={Coins}
         />
       </CardContent>
@@ -168,7 +168,7 @@ export function Costs() {
   } = useDateRange();
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Costs" }]);
+    setBreadcrumbs([{ label: "ต้นทุน" }]);
   }, [setBreadcrumbs]);
 
   const [today, setToday] = useState(() => new Date().toDateString());
@@ -464,7 +464,7 @@ export function Costs() {
         value: "all",
         label: (
           <span className="flex items-center gap-1.5">
-            <span>All providers</span>
+            <span>ผู้ให้บริการทั้งหมด</span>
             {providerKeys.length > 0 ? (
               <>
                 <span className="font-mono text-xs text-muted-foreground">{formatTokens(allTokens)}</span>
@@ -496,7 +496,7 @@ export function Costs() {
         value: "all",
         label: (
           <span className="flex items-center gap-1.5">
-            <span>All billers</span>
+            <span>ผู้เรียกเก็บเงินทั้งหมด</span>
             {billerKeys.length > 0 ? (
               <>
                 <span className="font-mono text-xs text-muted-foreground">{formatTokens(allTokens)}</span>
@@ -529,7 +529,7 @@ export function Costs() {
   }), [budgetPolicies]);
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={DollarSign} message="Select a company to view costs." />;
+    return <EmptyState icon={DollarSign} message="เลือกบริษัทเพื่อดูต้นทุน" />;
   }
 
   const showCustomPrompt = preset === "custom" && !customReady;
@@ -541,9 +541,9 @@ export function Costs() {
       <div className="space-y-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
-                <h1 className="text-3xl font-semibold tracking-tight">Costs</h1>
+                <h1 className="text-3xl font-semibold tracking-tight">ต้นทุน</h1>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-                  Inference spend, platform fees, credits, and live quota windows.
+                  ค่าใช้จ่าย inference ค่าธรรมเนียมแพลตฟอร์ม เครดิต และหน้าต่างโควตาแบบเรียลไทม์
                 </p>
             </div>
 
@@ -569,7 +569,7 @@ export function Costs() {
                 onChange={(event) => setCustomFrom(event.target.value)}
                 className="h-9 rounded-md border border-input bg-background px-3 text-sm text-foreground"
               />
-              <span className="text-sm text-muted-foreground">to</span>
+              <span className="text-sm text-muted-foreground">ถึง</span>
               <input
                 type="date"
                 value={customTo}
@@ -581,37 +581,37 @@ export function Costs() {
 
           <div className="grid gap-3 lg:grid-cols-4">
             <MetricTile
-              label="Inference spend"
+              label="ค่าใช้จ่าย Inference"
               value={formatCents(spendData?.summary.spendCents ?? 0)}
-              subtitle={`${formatTokens(inferenceTokenTotal)} tokens across request-scoped events`}
+              subtitle={`${formatTokens(inferenceTokenTotal)} โทเค็นจากเหตุการณ์ระดับคำขอ`}
               icon={DollarSign}
             />
             <MetricTile
-              label="Budget"
+              label="งบประมาณ"
               value={activeBudgetIncidents.length > 0 ? String(activeBudgetIncidents.length) : (
                 spendData?.summary.budgetCents && spendData.summary.budgetCents > 0
                   ? `${spendData.summary.utilizationPercent}%`
-                  : "Open"
+                  : "ไม่จำกัด"
               )}
               subtitle={
                 activeBudgetIncidents.length > 0
-                  ? `${budgetData?.pausedAgentCount ?? 0} agents paused · ${budgetData?.pausedProjectCount ?? 0} projects paused`
+                  ? `${budgetData?.pausedAgentCount ?? 0} เอเจนต์หยุดชั่วคราว · ${budgetData?.pausedProjectCount ?? 0} โปรเจกต์หยุดชั่วคราว`
                   : spendData?.summary.budgetCents && spendData.summary.budgetCents > 0
-                    ? `${formatCents(spendData.summary.spendCents)} of ${formatCents(spendData.summary.budgetCents)}`
-                    : "No monthly cap configured"
+                    ? `${formatCents(spendData.summary.spendCents)} จาก ${formatCents(spendData.summary.budgetCents)}`
+                    : "ไม่ได้ตั้งค่าเพดานรายเดือน"
               }
               icon={Coins}
             />
             <MetricTile
-              label="Finance net"
+              label="การเงินสุทธิ"
               value={formatCents(financeData?.summary.netCents ?? 0)}
-              subtitle={`${formatCents(financeData?.summary.debitCents ?? 0)} debits · ${formatCents(financeData?.summary.creditCents ?? 0)} credits`}
+              subtitle={`${formatCents(financeData?.summary.debitCents ?? 0)} เดบิต · ${formatCents(financeData?.summary.creditCents ?? 0)} เครดิต`}
               icon={ReceiptText}
             />
             <MetricTile
-              label="Finance events"
+              label="เหตุการณ์การเงิน"
               value={String(financeData?.summary.eventCount ?? 0)}
-              subtitle={`${formatCents(financeData?.summary.estimatedDebitCents ?? 0)} estimated in range`}
+              subtitle={`${formatCents(financeData?.summary.estimatedDebitCents ?? 0)} ประมาณการในช่วงเวลา`}
               icon={ArrowUpRight}
             />
           </div>
@@ -619,16 +619,16 @@ export function Costs() {
 
       <Tabs value={mainTab} onValueChange={(value) => setMainTab(value as typeof mainTab)}>
         <TabsList variant="line" className="justify-start">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="budgets">Budgets</TabsTrigger>
-          <TabsTrigger value="providers">Providers</TabsTrigger>
-          <TabsTrigger value="billers">Billers</TabsTrigger>
-          <TabsTrigger value="finance">Finance</TabsTrigger>
+          <TabsTrigger value="overview">ภาพรวม</TabsTrigger>
+          <TabsTrigger value="budgets">งบประมาณ</TabsTrigger>
+          <TabsTrigger value="providers">ผู้ให้บริการ</TabsTrigger>
+          <TabsTrigger value="billers">ผู้เรียกเก็บเงิน</TabsTrigger>
+          <TabsTrigger value="finance">การเงิน</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="mt-4 space-y-4">
           {showCustomPrompt ? (
-            <p className="text-sm text-muted-foreground">Select a start and end date to load data.</p>
+            <p className="text-sm text-muted-foreground">เลือกวันที่เริ่มต้นและสิ้นสุดเพื่อโหลดข้อมูล</p>
           ) : showOverviewLoading ? (
             <PageSkeleton variant="costs" />
           ) : overviewError ? (
@@ -657,9 +657,9 @@ export function Costs() {
               <div className="grid gap-4 xl:grid-cols-[1.3fr,1fr]">
                 <Card>
                   <CardHeader className="px-5 pt-5 pb-2">
-                    <CardTitle className="text-base">Inference ledger</CardTitle>
+                    <CardTitle className="text-base">บัญชี Inference</CardTitle>
                     <CardDescription>
-                      Request-scoped inference spend for the selected period.
+                      ค่าใช้จ่าย inference ระดับคำขอสำหรับช่วงเวลาที่เลือก
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4 px-5 pb-5 pt-2">
@@ -670,12 +670,12 @@ export function Costs() {
                         </div>
                         <div className="mt-1 text-sm text-muted-foreground">
                           {spendData?.summary.budgetCents && spendData.summary.budgetCents > 0
-                            ? `Budget ${formatCents(spendData.summary.budgetCents)}`
-                            : "Unlimited budget"}
+                            ? `งบประมาณ ${formatCents(spendData.summary.budgetCents)}`
+                            : "งบประมาณไม่จำกัด"}
                         </div>
                       </div>
                       <div className="border border-border px-4 py-3 text-right">
-                        <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">usage</div>
+                        <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">การใช้งาน</div>
                         <div className="mt-1 text-lg font-medium tabular-nums">
                           {formatTokens(inferenceTokenTotal)}
                         </div>
@@ -697,7 +697,7 @@ export function Costs() {
                           />
                         </div>
                         <div className="text-xs text-muted-foreground">
-                          {spendData.summary.utilizationPercent}% of monthly budget consumed in this range.
+                          ใช้ไป {spendData.summary.utilizationPercent}% ของงบประมาณรายเดือนในช่วงเวลานี้
                         </div>
                       </div>
                     ) : null}
@@ -716,12 +716,12 @@ export function Costs() {
               <div className="grid gap-4 xl:grid-cols-[1.25fr,0.95fr]">
                 <Card>
                   <CardHeader className="px-5 pt-5 pb-2">
-                    <CardTitle className="text-base">By agent</CardTitle>
-                    <CardDescription>What each agent consumed in the selected period.</CardDescription>
+                    <CardTitle className="text-base">แยกตามเอเจนต์</CardTitle>
+                    <CardDescription>สิ่งที่แต่ละเอเจนต์ใช้ในช่วงเวลาที่เลือก</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-2 px-5 pb-5 pt-2">
                     {(spendData?.byAgent.length ?? 0) === 0 ? (
-                      <p className="text-sm text-muted-foreground">No cost events yet.</p>
+                      <p className="text-sm text-muted-foreground">ยังไม่มีเหตุการณ์ค่าใช้จ่าย</p>
                     ) : (
                       spendData?.byAgent.map((row) => {
                         const modelRows = agentModelRows.get(row.agentId) ?? [];
@@ -747,15 +747,15 @@ export function Costs() {
                               <div className="text-right text-sm tabular-nums">
                                 <div className="font-medium">{formatCents(row.costCents)}</div>
                                 <div className="text-xs text-muted-foreground">
-                                  in {formatTokens(row.inputTokens + row.cachedInputTokens)} · out {formatTokens(row.outputTokens)}
+                                  เข้า {formatTokens(row.inputTokens + row.cachedInputTokens)} · ออก {formatTokens(row.outputTokens)}
                                 </div>
                                 {(row.apiRunCount > 0 || row.subscriptionRunCount > 0) ? (
                                   <div className="text-xs text-muted-foreground">
-                                    {row.apiRunCount > 0 ? `${row.apiRunCount} api` : "0 api"}
+                                    {row.apiRunCount > 0 ? `${row.apiRunCount} API` : "0 API"}
                                     {" · "}
                                     {row.subscriptionRunCount > 0
-                                      ? `${row.subscriptionRunCount} subscription`
-                                      : "0 subscription"}
+                                      ? `${row.subscriptionRunCount} การสมัครสมาชิก`
+                                      : "0 การสมัครสมาชิก"}
                                   </div>
                                 ) : null}
                               </div>
@@ -786,7 +786,7 @@ export function Costs() {
                                           <span className="ml-1 font-normal text-muted-foreground">({sharePct}%)</span>
                                         </div>
                                         <div className="text-muted-foreground">
-                                          {formatTokens(modelRow.inputTokens + modelRow.cachedInputTokens + modelRow.outputTokens)} tok
+                                          {formatTokens(modelRow.inputTokens + modelRow.cachedInputTokens + modelRow.outputTokens)} โทเค็น
                                         </div>
                                       </div>
                                     </div>
@@ -804,19 +804,19 @@ export function Costs() {
                 <div className="space-y-4">
                   <Card>
                     <CardHeader className="px-5 pt-5 pb-2">
-                      <CardTitle className="text-base">By project</CardTitle>
-                      <CardDescription>Run costs attributed through project-linked issues.</CardDescription>
+                      <CardTitle className="text-base">แยกตามโปรเจกต์</CardTitle>
+                      <CardDescription>ต้นทุนการรันที่เชื่อมโยงผ่านงานที่ผูกกับโปรเจกต์</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2 px-5 pb-5 pt-2">
                       {(spendData?.byProject.length ?? 0) === 0 ? (
-                        <p className="text-sm text-muted-foreground">No project-attributed run costs yet.</p>
+                        <p className="text-sm text-muted-foreground">ยังไม่มีต้นทุนการรันที่เชื่อมโยงกับโปรเจกต์</p>
                       ) : (
                         spendData?.byProject.map((row, index) => (
                           <div
                             key={row.projectId ?? `unattributed-${index}`}
                             className="flex items-center justify-between gap-3 border border-border px-3 py-2 text-sm"
                           >
-                            <span className="truncate">{row.projectName ?? row.projectId ?? "Unattributed"}</span>
+                            <span className="truncate">{row.projectName ?? row.projectId ?? "ไม่ได้ระบุ"}</span>
                             <span className="font-medium tabular-nums">{formatCents(row.costCents)}</span>
                           </div>
                         ))
@@ -824,7 +824,7 @@ export function Costs() {
                     </CardContent>
                   </Card>
 
-                  <FinanceTimelineCard rows={topFinanceEvents.slice(0, 6)} emptyMessage="No finance events yet. Add account-level charges once biller invoices or credits land." />
+                  <FinanceTimelineCard rows={topFinanceEvents.slice(0, 6)} emptyMessage="ยังไม่มีเหตุการณ์ทางการเงิน เพิ่มค่าใช้จ่ายระดับบัญชีเมื่อใบแจ้งหนี้หรือเครดิตจากผู้เรียกเก็บเงินมาถึง" />
                 </div>
               </div>
             </>
@@ -840,34 +840,34 @@ export function Costs() {
             <>
               <Card className="border-border/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))]">
                 <CardHeader className="px-5 pt-5 pb-3">
-                  <CardTitle className="text-base">Budget control plane</CardTitle>
+                  <CardTitle className="text-base">ระบบควบคุมงบประมาณ</CardTitle>
                   <CardDescription>
-                    Hard-stop spend limits for agents and projects. Provider subscription quota stays separate and appears under Providers.
+                    ขีดจำกัดการใช้จ่ายแบบหยุดอัตโนมัติสำหรับเอเจนต์และโปรเจกต์ โควตาการสมัครสมาชิกผู้ให้บริการจะแยกไว้ต่างหากภายใต้แท็บผู้ให้บริการ
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-3 px-5 pb-5 pt-0 md:grid-cols-4">
                   <MetricTile
-                    label="Active incidents"
+                    label="เหตุการณ์ที่ใช้งานอยู่"
                     value={String(activeBudgetIncidents.length)}
-                    subtitle="Open soft or hard threshold crossings"
+                    subtitle="การข้ามเกณฑ์แบบอ่อนหรือแบบแข็งที่เปิดอยู่"
                     icon={ReceiptText}
                   />
                   <MetricTile
-                    label="Pending approvals"
+                    label="การอนุมัติที่รอดำเนินการ"
                     value={String(budgetData?.pendingApprovalCount ?? 0)}
-                    subtitle="Budget override approvals awaiting board action"
+                    subtitle="การอนุมัติเปลี่ยนแปลงงบประมาณที่รอการดำเนินการจากบอร์ด"
                     icon={ArrowUpRight}
                   />
                   <MetricTile
-                    label="Paused agents"
+                    label="เอเจนต์ที่หยุดชั่วคราว"
                     value={String(budgetData?.pausedAgentCount ?? 0)}
-                    subtitle="Agent heartbeats blocked by budget"
+                    subtitle="การทำงานของเอเจนต์ถูกบล็อกโดยงบประมาณ"
                     icon={Coins}
                   />
                   <MetricTile
-                    label="Paused projects"
+                    label="โปรเจกต์ที่หยุดชั่วคราว"
                     value={String(budgetData?.pausedProjectCount ?? 0)}
-                    subtitle="Project execution blocked by budget"
+                    subtitle="การดำเนินการโปรเจกต์ถูกบล็อกโดยงบประมาณ"
                     icon={DollarSign}
                   />
                 </CardContent>
@@ -876,9 +876,9 @@ export function Costs() {
               {activeBudgetIncidents.length > 0 ? (
                 <div className="space-y-3">
                   <div>
-                    <h2 className="text-lg font-semibold">Active incidents</h2>
+                    <h2 className="text-lg font-semibold">เหตุการณ์ที่ใช้งานอยู่</h2>
                     <p className="text-sm text-muted-foreground">
-                      Resolve hard stops here by raising the budget or explicitly keeping the scope paused.
+                      แก้ไขการหยุดอัตโนมัติที่นี่โดยเพิ่มงบประมาณหรือเลือกให้ขอบเขตหยุดชั่วคราวต่อไป
                     </p>
                   </div>
                   <div className="grid gap-4 xl:grid-cols-2">
@@ -907,13 +907,13 @@ export function Costs() {
                   return (
                     <section key={scopeType} className="space-y-3">
                       <div>
-                        <h2 className="text-lg font-semibold capitalize">{scopeType} budgets</h2>
+                        <h2 className="text-lg font-semibold capitalize">งบประมาณ{scopeType === "company" ? "บริษัท" : scopeType === "agent" ? "เอเจนต์" : "โปรเจกต์"}</h2>
                         <p className="text-sm text-muted-foreground">
                           {scopeType === "company"
-                            ? "Company-wide monthly policy."
+                            ? "นโยบายรายเดือนระดับบริษัท"
                             : scopeType === "agent"
-                              ? "Recurring monthly spend policies for individual agents."
-                              : "Lifetime spend policies for execution-bound projects."}
+                              ? "นโยบายการใช้จ่ายรายเดือนแบบต่อเนื่องสำหรับเอเจนต์แต่ละตัว"
+                              : "นโยบายการใช้จ่ายตลอดอายุสำหรับโปรเจกต์ที่ผูกกับการดำเนินการ"}
                         </p>
                       </div>
                       <div className="grid gap-4 xl:grid-cols-2">
@@ -939,7 +939,7 @@ export function Costs() {
                 {budgetPolicies.length === 0 ? (
                   <Card>
                     <CardContent className="px-5 py-8 text-sm text-muted-foreground">
-                      No budget policies yet. Set agent and project budgets from their detail pages, or use the existing company monthly budget control.
+                      ยังไม่มีนโยบายงบประมาณ ตั้งค่างบประมาณเอเจนต์และโปรเจกต์จากหน้ารายละเอียด หรือใช้การควบคุมงบประมาณรายเดือนของบริษัทที่มีอยู่
                     </CardContent>
                   </Card>
                 ) : null}
@@ -950,7 +950,7 @@ export function Costs() {
 
         <TabsContent value="providers" className="mt-4 space-y-4">
           {showCustomPrompt ? (
-            <p className="text-sm text-muted-foreground">Select a start and end date to load data.</p>
+            <p className="text-sm text-muted-foreground">เลือกวันที่เริ่มต้นและสิ้นสุดเพื่อโหลดข้อมูล</p>
           ) : (
             <>
               <Tabs value={effectiveProvider} onValueChange={setActiveProvider}>
@@ -958,7 +958,7 @@ export function Costs() {
 
                 <TabsContent value="all" className="mt-4">
                   {providers.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">No cost events in this period.</p>
+                    <p className="text-sm text-muted-foreground">ไม่มีเหตุการณ์ค่าใช้จ่ายในช่วงเวลานี้</p>
                   ) : (
                     <div className="grid gap-4 md:grid-cols-2">
                       {providers.map((provider) => (
@@ -1005,7 +1005,7 @@ export function Costs() {
 
         <TabsContent value="billers" className="mt-4 space-y-4">
           {showCustomPrompt ? (
-            <p className="text-sm text-muted-foreground">Select a start and end date to load data.</p>
+            <p className="text-sm text-muted-foreground">เลือกวันที่เริ่มต้นและสิ้นสุดเพื่อโหลดข้อมูล</p>
           ) : (
             <>
               <Tabs value={effectiveBiller} onValueChange={setActiveBiller}>
@@ -1013,7 +1013,7 @@ export function Costs() {
 
                 <TabsContent value="all" className="mt-4">
                   {billers.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">No billable events in this period.</p>
+                    <p className="text-sm text-muted-foreground">ไม่มีเหตุการณ์ที่เรียกเก็บเงินในช่วงเวลานี้</p>
                   ) : (
                     <div className="grid gap-4 md:grid-cols-2">
                       {billers.map((biller) => {
@@ -1058,7 +1058,7 @@ export function Costs() {
 
         <TabsContent value="finance" className="mt-4 space-y-4">
           {showCustomPrompt ? (
-            <p className="text-sm text-muted-foreground">Select a start and end date to load data.</p>
+            <p className="text-sm text-muted-foreground">เลือกวันที่เริ่มต้นและสิ้นสุดเพื่อโหลดข้อมูล</p>
           ) : financeLoading ? (
             <PageSkeleton variant="costs" />
           ) : financeError ? (
@@ -1077,12 +1077,12 @@ export function Costs() {
                 <div className="space-y-4">
                   <Card>
                     <CardHeader className="px-5 pt-5 pb-2">
-                      <CardTitle className="text-base">By biller</CardTitle>
-                      <CardDescription>Account-level financial events grouped by who charged or credited them.</CardDescription>
+                      <CardTitle className="text-base">แยกตามผู้เรียกเก็บเงิน</CardTitle>
+                      <CardDescription>เหตุการณ์ทางการเงินระดับบัญชีจัดกลุ่มตามผู้เรียกเก็บหรือให้เครดิต</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-4 px-5 pb-5 pt-2 md:grid-cols-2">
                       {(financeData?.byBiller.length ?? 0) === 0 ? (
-                        <p className="text-sm text-muted-foreground">No finance events yet.</p>
+                        <p className="text-sm text-muted-foreground">ยังไม่มีเหตุการณ์ทางการเงิน</p>
                       ) : (
                         financeData?.byBiller.map((row) => <FinanceBillerCard key={row.biller} row={row} />)
                       )}
