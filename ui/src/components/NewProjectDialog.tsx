@@ -118,11 +118,10 @@ export function NewProjectDialog() {
 
   const isAbsolutePath = (value: string) => value.startsWith("/") || /^[A-Za-z]:[\\/]/.test(value);
 
-  const isGitHubRepoUrl = (value: string) => {
+  const isGitRepoUrl = (value: string) => {
     try {
       const parsed = new URL(value);
-      const host = parsed.hostname.toLowerCase();
-      if (host !== "github.com" && host !== "www.github.com") return false;
+      if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return false;
       const segments = parsed.pathname.split("/").filter(Boolean);
       return segments.length >= 2;
     } catch {
@@ -156,8 +155,8 @@ export function NewProjectDialog() {
       setWorkspaceError("Local folder must be a full absolute path.");
       return;
     }
-    if (repoUrl && !isGitHubRepoUrl(repoUrl)) {
-      setWorkspaceError("Repo must use a valid GitHub repo URL.");
+    if (repoUrl && !isGitRepoUrl(repoUrl)) {
+      setWorkspaceError("Repo ต้องเป็น URL ของ Git repo ที่ถูกต้อง เช่น https://github.com/org/repo หรือ https://gitlab.com/org/repo");
       return;
     }
 
@@ -301,7 +300,7 @@ export function NewProjectDialog() {
               className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
               value={workspaceRepoUrl}
               onChange={(e) => { setWorkspaceRepoUrl(e.target.value); setWorkspaceError(null); }}
-              placeholder="https://github.com/org/repo"
+              placeholder="https://github.com/org/repo หรือ https://gitlab.com/org/repo"
             />
           </div>
 
