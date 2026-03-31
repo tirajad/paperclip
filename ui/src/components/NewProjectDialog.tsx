@@ -119,6 +119,8 @@ export function NewProjectDialog() {
   const isAbsolutePath = (value: string) => value.startsWith("/") || /^[A-Za-z]:[\\/]/.test(value);
 
   const isGitRepoUrl = (value: string) => {
+    // SSH format: git@host:org/repo.git
+    if (/^git@[^:]+:.+\/.+/.test(value)) return true;
     try {
       const parsed = new URL(value);
       if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return false;
@@ -300,7 +302,7 @@ export function NewProjectDialog() {
               className="w-full rounded border border-border bg-transparent px-2 py-1 text-xs outline-none"
               value={workspaceRepoUrl}
               onChange={(e) => { setWorkspaceRepoUrl(e.target.value); setWorkspaceError(null); }}
-              placeholder="https://github.com/org/repo หรือ https://gitlab.com/org/repo"
+              placeholder="https://gitlab.com/org/repo หรือ git@host:org/repo.git"
             />
           </div>
 
